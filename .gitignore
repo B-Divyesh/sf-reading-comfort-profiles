@@ -1,6 +1,12 @@
 node_modules/
+.output/
+.wxt/
 dist/
-.env
+site/public/downloads/
+coverage/
+playwright-report/
+test-results/
 *.log
+.env
 graphify-out/
 .DS_Store

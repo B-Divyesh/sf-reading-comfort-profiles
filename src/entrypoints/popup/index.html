@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f3f7f5" />
+    <title>Reading Comfort Profiles</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to settings</a>
+    <header class="topbar">
+      <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div>
+        <p class="eyebrow">Reading comfort</p>
+        <h1>Fit this page</h1>
+      </div>
+      <button class="switch" id="site-toggle" type="button" role="switch" aria-checked="false" aria-label="Enable comfort settings on this site">
+        <span class="switch-thumb" aria-hidden="true"></span>
+      </button>
+    </header>
+
+    <main id="main" tabindex="-1" aria-busy="true">
+      <section class="loading" id="loading-state" aria-label="Loading">
+        <span class="loading-shape"></span>
+        <p>Finding this page…</p>
+      </section>
+
+      <section class="notice hidden" id="unsupported-state" aria-labelledby="unsupported-title">
+        <div class="notice-icon" aria-hidden="true">—</div>
+        <h2 id="unsupported-title">This page stays unchanged</h2>
+        <p>Browser settings and internal pages cannot be restyled. Open a website, then try again.</p>
+      </section>
+
+      <section class="notice error hidden" id="error-state" aria-labelledby="error-title">
+        <div class="notice-icon" aria-hidden="true">!</div>
+        <h2 id="error-title">Settings could not load</h2>
+        <p>Your browser may have blocked local storage. Nothing was changed.</p>
+        <button class="secondary-button" id="retry-button" type="button">Try again</button>
+      </section>
+
+      <div id="settings" class="hidden">
+        <div class="domain-status">
+          <span class="status-dot" aria-hidden="true"></span>
+          <p><span id="status-label">Active on</span> <strong id="domain-label"></strong></p>
+        </div>
+
+        <section class="profile-picker" aria-labelledby="profile-heading">
+          <div class="section-heading">
+            <div>
+              <p class="step">01 / Profile</p>
+              <h2 id="profile-heading">Choose the fit</h2>
+            </div>
+            <button class="icon-button" id="new-profile-button" type="button" aria-label="Create a new profile">+</button>
+          </div>
+          <label class="select-label" for="profile-select">Profile for this domain</label>
+          <div class="select-wrap">
+            <select id="profile-select"></select>
+          </div>
+        </section>
+
+        <section class="controls" aria-labelledby="adjust-heading">
+          <div class="section-heading">
+            <div>
+              <p class="step">02 / Adjust</p>
+              <h2 id="adjust-heading">Tune the page</h2>
+            </div>
+            <span class="saved-state" id="saved-state" aria-live="polite">Saved locally</span>
+          </div>
+
+          <div class="range-field">
+            <div class="field-label"><label for="font-size">Reading text</label><output id="font-size-output" for="font-size">19 px</output></div>
+            <input id="font-size" type="range" min="14" max="28" step="1" />
+            <div class="range-ends" aria-hidden="true"><span>Smaller</span><span>Larger</span></div>
+          </div>
+
+          <div class="range-field">
+            <div class="field-label"><label for="line-height">Line spacing</label><output id="line-height-output" for="line-height">1.65×</output></div>
+            <input id="line-height" type="range" min="1.2" max="2" step="0.05" />
+            <div class="range-ends" aria-hidden="true"><span>Tighter</span><span>Airier</span></div>
+          </div>
+
+          <div class="range-field">
+            <div class="field-label"><label for="code-size">Code text</label><output id="code-size-output" for="code-size">17 px</output></div>
+            <input id="code-size" type="range" min="13" max="26" step="1" />
+            <div class="range-ends" aria-hidden="true"><span>Smaller</span><span>Larger</span></div>
+          </div>
+
+          <div class="select-field">
+            <label for="contrast">Text contrast</label>
+            <select id="contrast">
+              <option value="standard">Standard</option>
+              <option value="stronger">Stronger</option>
+              <option value="maximum">Maximum</option>
+            </select>
+          </div>
+
+          <div class="toggle-row">
+            <div><label id="focus-label" for="focus-toggle">Visible focus &amp; cursor</label><p>Larger pointer and a high-contrast keyboard ring.</p></div>
+            <button class="switch compact" id="focus-toggle" type="button" role="switch" aria-checked="false" aria-labelledby="focus-label"><span class="switch-thumb" aria-hidden="true"></span></button>
+          </div>
+
+          <div class="toggle-row">
+            <div><label id="table-label" for="table-toggle">Roomier tables</label><p>Adds breathing space around table cells.</p></div>
+            <button class="switch compact" id="table-toggle" type="button" role="switch" aria-checked="false" aria-labelledby="table-label"><span class="switch-thumb" aria-hidden="true"></span></button>
+          </div>
+        </section>
+
+        <section class="shortcut-note" aria-labelledby="shortcut-heading">
+          <p class="step">03 / Move quickly</p>
+          <h2 id="shortcut-heading">Keep your hands on the keyboard</h2>
+          <dl>
+            <div><dt>Toggle on this site</dt><dd><kbd>Alt</kbd><b>+</b><kbd>Shift</kbd><b>+</b><kbd>R</kbd></dd></div>
+            <div><dt>Next profile</dt><dd><kbd>Alt</kbd><b>+</b><kbd>Shift</kbd><b>+</b><kbd>.</kbd></dd></div>
+          </dl>
+        </section>
+
+        <button class="delete-button" id="delete-profile-button" type="button">Delete this custom profile</button>
+      </div>
+    </main>
+
+    <dialog id="profile-dialog" aria-labelledby="dialog-title">
+      <form method="dialog" id="profile-form">
+        <button class="dialog-close" value="cancel" type="submit" aria-label="Close dialog">×</button>
+        <p class="step">New profile</p>
+        <h2 id="dialog-title">Name your reading fit</h2>
+        <p>It starts with the current settings. You can tune it after saving.</p>
+        <label for="profile-name">Profile name</label>
+        <input id="profile-name" name="profileName" required maxlength="36" autocomplete="off" />
+        <p class="field-error hidden" id="name-error" role="alert">Enter a name for this profile.</p>
+        <div class="dialog-actions">
+          <button class="text-button" value="cancel" type="submit">Cancel</button>
+          <button class="primary-button" id="create-profile" value="default" type="button">Create profile</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="delete-dialog" aria-labelledby="delete-title">
+      <form method="dialog">
+        <p class="step">Confirm deletion</p>
+        <h2 id="delete-title">Delete <span id="delete-name"></span>?</h2>
+        <p>Domains using it will return to Calm reading. This cannot be undone.</p>
+        <div class="dialog-actions">
+          <button class="text-button" value="cancel" type="submit">Keep profile</button>
+          <button class="danger-button" id="confirm-delete" value="default" type="button">Delete profile</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
