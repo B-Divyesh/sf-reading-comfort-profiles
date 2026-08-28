@@ -1,8 +1,9 @@
 # Demo sandbox
 
-- URL: <https://reading-comfort-profiles.sociobot.in/demo/>
+- One-click URL: <https://reading-comfort-profiles.sociobot.in/?demo=1>
+- Isolated route after entry: <https://reading-comfort-profiles.sociobot.in/demo/?demo=1>
 - Local URL after `npm run dev:site`: <http://localhost:5173/demo/>
-- Entry point: select **Try it with sample data** on the landing page.
+- Entry point: select **Try it with sample data** on the first screen, or open `/?demo=1` directly.
 - Sample: a quarterly access-review document with realistic prose, a code decision, and three request rows. The seeded Calm reading profile uses 19 px prose, 1.65 line spacing, 17 px code, stronger contrast, and roomier tables.
 - Isolation: the demo reads and writes only `localStorage["demo:reading-comfort-profiles"]`. It never reads or writes extension storage.
 - Reset: **Reset demo** restores the seeded Calm reading values.

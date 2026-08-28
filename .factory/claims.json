@@ -1,17 +1,17 @@
 [
   {
     "id": "sample-demo",
-    "claim": "Visitors can try a seeded sample workspace in one click without changing real profile data.",
-    "where": "landing first screen, /demo, README",
+    "claim": "Visitors can open a seeded sample workspace in one click without changing real profile data.",
+    "where": "landing first screen, /?demo=1, README",
     "test": "npm run test:e2e -- --grep @claim:sample-demo --project desktop-chromium",
-    "sandbox": "fresh browser context; click the landing action; assert seeded work data and only the demo-prefixed storage key"
+    "sandbox": "fresh browser context; click the landing action; assert the demo route, sample work, banner, and only the demo-prefixed storage key"
   },
   {
     "id": "profile-settings",
     "claim": "The sample changes text, code, contrast, and table settings and can be reset.",
     "where": "/demo, landing product description, README",
     "test": "npm run test:e2e -- --grep @claim:profile-settings --project desktop-chromium",
-    "sandbox": "fresh /demo context; change and persist a setting; reload; reset; leave demo and assert demo data is discarded"
+    "sandbox": "fresh demo context; change and persist a setting; reload; reset; leave demo and assert demo data is discarded"
   },
   {
     "id": "privacy-local",
@@ -23,7 +23,7 @@
   {
     "id": "offline-reload",
     "claim": "The product site and interactive demo reload offline after the first visit.",
-    "where": "landing facts, offline notice, /privacy, README",
+    "where": "landing first screen, offline notice, /privacy, README",
     "test": "npm run test:e2e -- --grep @claim:offline-reload --project desktop-chromium",
     "sandbox": "fresh context; activate the service worker; reload under browser offline mode; assert CSS and demo behavior"
   },
@@ -35,6 +35,13 @@
     "sandbox": "fresh landing page; assert the no-account fact and unzip the same-origin downloadable package"
   },
   {
+    "id": "chromium-package",
+    "claim": "The packaged extension loads and runs in Chromium.",
+    "where": "landing compatibility line, README",
+    "test": "npm run test:e2e -- --grep @claim:chromium-package --project desktop-chromium",
+    "sandbox": "fresh Chromium profile; load only dist/extension and verify its popup and content script"
+  },
+  {
     "id": "keyboard-shortcuts",
     "claim": "The packaged extension provides commands to pause or resume and cycle profiles.",
     "where": "landing keyboard section, popup, README",
@@ -43,16 +50,86 @@
   },
   {
     "id": "per-domain-profiles",
-    "claim": "The extension applies a selected reading profile to the current domain and can pause it there.",
-    "where": "landing product sections, popup, README",
+    "claim": "A saved profile returns on the same work site, remains independent by work site, and can be paused without changing browser zoom.",
+    "where": "landing profile section, popup, README",
     "test": "npm run test:e2e -- --grep @claim:per-domain-profiles --project desktop-chromium",
-    "sandbox": "fresh persistent Chromium profile with the packaged extension; apply Code focus to the sample host and pause it"
+    "sandbox": "fresh Chromium profile; assign a custom profile, reload and open a same-host page, compare a second host, check zoom, then pause and resume"
+  },
+  {
+    "id": "semantic-layout",
+    "claim": "Reading and code text sizes change while headings, navigation, and controls retain their size.",
+    "where": "landing profile and control sections, README",
+    "test": "npm run test:e2e -- --grep @claim:semantic-layout --project desktop-chromium",
+    "sandbox": "packaged extension on the sample work page; set maximum reading/code values and compare computed text plus heading/control geometry"
+  },
+  {
+    "id": "table-spacing",
+    "claim": "Optional table spacing changes cell padding without changing table headings, values, or structure.",
+    "where": "landing table sections, README",
+    "test": "npm run test:e2e -- --grep @claim:table-spacing --project desktop-chromium",
+    "sandbox": "packaged extension on the sample table; compare cell padding and assert all table text and markup remain unchanged"
+  },
+  {
+    "id": "setting-ranges",
+    "claim": "The packaged extension supports reading text from 14 to 28 px, line spacing from 1.2 to 2, and code text from 13 to 26 px.",
+    "where": "landing controls, popup, README",
+    "test": "npm run test:e2e -- --grep @claim:setting-ranges --project desktop-chromium",
+    "sandbox": "packaged extension; assert control endpoints and apply minimum and maximum values to the injected stylesheet"
+  },
+  {
+    "id": "focus-cursor-visibility",
+    "claim": "The focus and pointer option adds a larger cursor and a high-contrast keyboard focus outline.",
+    "where": "landing controls, popup, README",
+    "test": "npm run test:e2e -- --grep @claim:focus-cursor-visibility --project desktop-chromium",
+    "sandbox": "packaged extension; enable the option, assert injected cursor and focus rules, and calculate at least 4.5:1 outline contrast"
+  },
+  {
+    "id": "starter-profiles",
+    "claim": "A fresh extension contains Calm reading, Balanced work, and Code focus profiles.",
+    "where": "landing preview, popup, README",
+    "test": "npm run test:e2e -- --grep @claim:starter-profiles --project desktop-chromium",
+    "sandbox": "fresh packaged extension; assert the initial profile selector has exactly the three named options"
+  },
+  {
+    "id": "custom-profile-clone",
+    "claim": "A new custom profile copies every setting from the current profile.",
+    "where": "popup, README",
+    "test": "npm run test:e2e -- --grep @claim:custom-profile-clone --project desktop-chromium",
+    "sandbox": "set distinctive values, create a named profile with Enter, and inspect the saved profile values"
+  },
+  {
+    "id": "contrast-treatments",
+    "claim": "The extension provides standard, stronger, and maximum text contrast settings.",
+    "where": "popup, README",
+    "test": "npm run test:e2e -- --grep @claim:contrast-treatments --project desktop-chromium",
+    "sandbox": "select each packaged contrast setting and assert its distinct computed filter on sample text"
   },
   {
     "id": "extension-privacy",
-    "claim": "The extension stores one local settings record, requests no history permission, and sends no third-party requests during use.",
+    "claim": "The extension stores one local settings record, requests no history or cookies permission, and sends no third-party requests during use.",
     "where": "landing facts, /privacy, README",
     "test": "npm run test:e2e -- --grep @claim:extension-privacy --project desktop-chromium",
-    "sandbox": "fresh persistent Chromium profile; run the extension flow; inspect local extension storage, manifest permissions, and all HTTP requests"
+    "sandbox": "fresh Chromium profile; run the full extension flow; inspect storage, permissions, and all HTTP requests"
+  },
+  {
+    "id": "content-preservation",
+    "claim": "The extension changes presentation without editing page text or element structure.",
+    "where": "landing, /privacy, README",
+    "test": "npm run test:e2e -- --grep @claim:content-preservation --project desktop-chromium",
+    "sandbox": "capture sample main text, element count, and table markup before profile changes; assert an exact match afterward"
+  },
+  {
+    "id": "profile-deletion",
+    "claim": "A custom profile can be deleted from the popup and assigned sites return to Calm reading.",
+    "where": "popup, /privacy",
+    "test": "npm run test:e2e -- --grep @claim:profile-deletion --project desktop-chromium",
+    "sandbox": "create and assign a named profile; confirm deletion; assert the option disappears and Calm reading is selected"
+  },
+  {
+    "id": "unsupported-pages",
+    "claim": "Browser-internal pages stay unchanged and the popup explains what to do next.",
+    "where": "popup",
+    "test": "npm run test:e2e -- --grep @claim:unsupported-pages --project desktop-chromium",
+    "sandbox": "open a Chromium internal page, reload the packaged popup, and assert the designed unsupported-page recovery state"
   }
 ]

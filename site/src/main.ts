@@ -1,5 +1,13 @@
 const offlineBanner = document.getElementById('offline-banner');
 const DEMO_KEY = 'demo:reading-comfort-profiles';
+const ROUTE_FOCUS_KEY = 'reading-comfort-route-focus';
+
+const shouldRedirectToDemo = location.pathname === '/' && new URLSearchParams(location.search).get('demo') === '1';
+
+if (shouldRedirectToDemo) {
+  sessionStorage.setItem(ROUTE_FOCUS_KEY, 'Demo — Reading Comfort Profiles');
+  location.replace('/demo/?demo=1');
+}
 
 interface DemoState {
   profile: 'calm' | 'balanced' | 'code';
@@ -16,24 +24,53 @@ const sampleProfiles: Record<DemoState['profile'], DemoState> = {
   code: { profile: 'code', fontSize: 18, lineHeight: 1.55, codeSize: 19, contrast: 'maximum', roomyTables: false }
 };
 
+if (!shouldRedirectToDemo) initializePage();
+
 function updateConnectionState(event?: Event): void {
   if (offlineBanner) offlineBanner.hidden = event?.type === 'offline' ? false : navigator.onLine;
 }
 
-window.addEventListener('online', updateConnectionState);
-window.addEventListener('offline', updateConnectionState);
-window.addEventListener('pageshow', () => window.setTimeout(updateConnectionState, 250));
-updateConnectionState();
+function initializePage(): void {
+  window.addEventListener('online', updateConnectionState);
+  window.addEventListener('offline', updateConnectionState);
+  window.addEventListener('pageshow', handlePageShow);
+  document.addEventListener('click', rememberDocumentNavigation);
+  updateConnectionState();
 
-if ('serviceWorker' in navigator && import.meta.env.PROD) {
-  window.addEventListener('load', () => {
-    void navigator.serviceWorker.register('/sw.js').catch(() => {
-      // The site remains fully usable without offline caching.
+  if ('serviceWorker' in navigator && import.meta.env.PROD) {
+    window.addEventListener('load', () => {
+      void navigator.serviceWorker.register('/sw.js').catch(() => {
+        // The site remains fully usable without offline caching.
+      });
     });
-  });
+  }
+
+  if (document.body.dataset.page === 'demo') initializeDemo();
+  const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+  if (sessionStorage.getItem(ROUTE_FOCUS_KEY) || navigation?.type === 'back_forward') announceRoute();
 }
 
-if (document.body.dataset.page === 'demo') initializeDemo();
+function rememberDocumentNavigation(event: MouseEvent): void {
+  const link = (event.target as Element | null)?.closest<HTMLAnchorElement>('a[href]');
+  if (!link || link.hasAttribute('download') || link.target || event.defaultPrevented) return;
+  const destination = new URL(link.href, location.href);
+  if (destination.origin !== location.origin || destination.pathname === location.pathname) return;
+  sessionStorage.setItem(ROUTE_FOCUS_KEY, document.title);
+}
+
+function handlePageShow(event: PageTransitionEvent): void {
+  window.setTimeout(updateConnectionState, 250);
+  if (event.persisted) announceRoute();
+}
+
+function announceRoute(): void {
+  sessionStorage.removeItem(ROUTE_FOCUS_KEY);
+  const heading = document.querySelector<HTMLElement>('h1');
+  const liveRegion = document.querySelector<HTMLElement>('.route-status');
+  if (!heading || !liveRegion) return;
+  heading.focus({ preventScroll: true });
+  window.setTimeout(() => { liveRegion.textContent = document.title; }, 50);
+}
 
 function initializeDemo(): void {
   const form = document.getElementById('demo-controls') as HTMLFormElement;

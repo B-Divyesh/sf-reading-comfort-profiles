@@ -1,28 +1,34 @@
 # Reading Comfort Profiles
 
-Reading Comfort Profiles is a free Manifest V3 browser extension for knowledge workers with low vision. It saves a semantic reading profile for each work domain, so prose, code, contrast, keyboard focus, cursor visibility, and table density can be adjusted without repeatedly changing browser zoom.
+Reading Comfort Profiles is a free browser extension for knowledge workers with low vision.
 
-The product is intentionally local-first: it has no account, analytics, browsing-history collection, third-party runtime code, or network API. Profile settings and domain assignments stay in browser-local extension storage.
+Save one reading profile for each work site. Change text, code, contrast, focus, pointer size, and table spacing without changing browser zoom.
+
+It has no account or analytics. Your profile settings stay in your browser.
 
 Live site: <https://reading-comfort-profiles.sociobot.in>
 
 ## Try the sample workspace
 
-Open <https://reading-comfort-profiles.sociobot.in/demo/> or select **Try it with sample data** on the landing page. The demo starts with a realistic access-review document, code decision, and table. It uses only the separate `demo:reading-comfort-profiles` browser-storage key. **Reset demo** restores the sample. **Start for real** removes the demo key before returning home.
+Open <https://reading-comfort-profiles.sociobot.in/?demo=1> or select **Try it with sample data** on the landing page.
+
+The demo includes an access-review document, code decision, and table. It uses only the separate `demo:reading-comfort-profiles` browser-storage key.
+
+**Reset demo** restores the sample. **Start for real** removes the demo key before returning home.
 
 ## What v1 includes
 
-- Three useful starter profiles: Calm reading, Balanced work, and Code focus
-- Custom profiles cloned from the current fit
-- Per-domain profile assignment and pause state
+- Three starter profiles: Calm reading, Balanced work, and Code focus
+- Custom profiles copied from the current profile settings
+- Per-work-site profile assignment and pause state
 - Independent base text, line-height, and code-size controls
 - Standard, stronger, and maximum text contrast treatments
 - Optional large pointer, high-contrast focus ring, and roomier tables
 - Keyboard commands for pause/resume and profile cycling
-- Chrome-compatible packaged download and unpacked build output
+- A Chromium package tested in Chromium
 - Offline-capable static product site with privacy and terms pages
 
-This is not a screen-reader replacement and does not rewrite or scrape page content. Complex canvas-based applications cannot be restyled.
+The extension changes presentation through CSS. It does not edit page text or element structure.
 
 ## Develop
 
@@ -34,7 +40,9 @@ npm run dev          # WXT extension development mode
 npm run dev:site     # landing site on a local Vite server
 ```
 
-In extension development mode, load the WXT output from `.output/chrome-mv3` through your Chromium browser’s extension manager if it is not opened automatically.
+Development mode creates an unpacked Chromium extension in `.output/chrome-mv3`.
+
+If it does not open automatically, load that folder from your browser’s extension manager.
 
 ## Test and build
 
@@ -46,22 +54,22 @@ npm run test:e2e     # Chromium desktop/mobile and axe checks
 npm run verify       # all gates in sequence
 ```
 
-`npm run build:site` is self-contained and produces the deployable site at `dist/site/`, including `dist/site/index.html` and the packaged extension at `dist/site/downloads/reading-comfort-profiles-chrome.zip`. The unpacked extension also lands at `dist/extension/`.
+Run `npm run build:site` to create the deployable site in `dist/site/`.
+
+The packaged extension is `dist/site/downloads/reading-comfort-profiles-chrome.zip`. The unpacked extension is in `dist/extension/`.
 
 ## Install the packaged extension
 
 1. Download and unzip `reading-comfort-profiles-chrome.zip`.
-2. Open `chrome://extensions` (or the equivalent page in Edge/Brave).
+2. Open `chrome://extensions` in Chromium.
 3. Enable Developer mode.
 4. Choose **Load unpacked** and select the unzipped folder.
 
 Keyboard commands default to:
 
-- `Alt+Shift+R`: pause or resume the current domain
+- `Alt+Shift+R`: pause or resume the current work site
 - `Alt+Shift+.`: use the next profile
 - `Alt+Shift+,`: use the previous profile
-
-Browsers may let users change these bindings on their extension shortcuts page.
 
 ## Project layout
 

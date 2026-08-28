@@ -15,6 +15,9 @@ test('landing page presents the audience, demo, and working download', async ({ 
   await expect(page.getByRole('heading', { name: /low-vision reading/i })).toBeVisible();
   await expect(page.getByText(/knowledge workers with low vision/i)).toBeVisible();
   await expect(page.getByRole('link', { name: /Try it with sample data/ })).toBeVisible();
+  await expect(page.getByLabel('Product facts').getByText('Free', { exact: true })).toBeVisible();
+  await expect(page.getByLabel('Product facts').getByText('Profiles stay in your browser', { exact: true })).toBeVisible();
+  await expect(page.getByLabel('Product facts').getByText('Site works offline after first visit', { exact: true })).toBeVisible();
   const download = await request.get('/downloads/reading-comfort-profiles-chrome.zip');
   expect(download.ok()).toBeTruthy();
   expect((await download.body()).byteLength).toBeGreaterThan(10_000);
@@ -24,11 +27,27 @@ test('landing page presents the audience, demo, and working download', async ({ 
 test('@claim:sample-demo opens a seeded, isolated demo in one click', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('link', { name: /Try it with sample data/ }).click();
-  await expect(page).toHaveURL(/\/demo\/$/);
+  await expect(page).toHaveURL(/\/demo\/\?demo=1$/);
   await expect(page.getByText('Demo — sample data, nothing is saved to your profiles')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Quarterly access review' })).toBeVisible();
   await expect(page.getByText('Finance export')).toBeVisible();
   expect(await page.evaluate(() => Object.keys(localStorage))).toEqual(['demo:reading-comfort-profiles']);
+});
+
+test('the ?demo=1 entry, forward navigation, and Back move focus and announce routes', async ({ page }) => {
+  await page.goto('/?demo=1');
+  await expect(page).toHaveURL(/\/demo\/\?demo=1$/);
+  await expect(page.locator('h1')).toBeFocused();
+  await expect(page.locator('.route-status')).toHaveText('Demo — Reading Comfort Profiles');
+
+  await page.goto('/');
+  await page.getByRole('link', { name: /Try it with sample data/ }).click();
+  await expect(page.locator('h1')).toBeFocused();
+  await expect(page.locator('.route-status')).toHaveText('Demo — Reading Comfort Profiles');
+  await page.goBack();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.locator('h1')).toBeFocused();
+  await expect(page.locator('.route-status')).toHaveText('Reading Comfort Profiles — Adjust work sites');
 });
 
 test('@claim:profile-settings changes, saves, and resets the sample profile', async ({ page }) => {
@@ -75,7 +94,7 @@ test('@claim:offline-reload reloads the styled interactive demo offline after on
       (await (await caches.open(key)).keys()).map((request) => request.url)
     ))).flat();
     return urls.some((url) => /\/assets\/main-[^/]+\.js$/.test(url))
-      && urls.some((url) => /\/assets\/site-[^/]+\.css$/.test(url));
+      && urls.some((url) => /\/assets\/main-[^/]+\.css$/.test(url));
   })).toBeTruthy();
   const cdp = await context.newCDPSession(page);
   await cdp.send('Network.enable');
@@ -118,13 +137,16 @@ test('all public pages have semantics, metadata, and no serious axe findings', a
     await expect(page.locator('h1')).toHaveCount(1);
     await expect(page.locator('main')).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /\S/);
+    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', /\S/);
+    await expect(page.locator('meta[property="og:description"]')).toHaveAttribute('content', /\S/);
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /social-preview\.jpg$/);
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
+    await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveCount(1);
+    await expect(page.locator('.route-status[aria-live="polite"]')).toHaveCount(1);
     const results = await new AxeBuilder({ page: page as never }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
     expect(results.violations.filter((violation) => ['serious', 'critical'].includes(violation.impact ?? '')), path).toEqual([]);
   }
-  await page.goto('/');
-  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /social-preview\.jpg$/);
-  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
-  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveCount(1);
 });
 
 test('mobile and 200% text layouts do not overflow and standalone targets reach 44px', async ({ page }) => {
