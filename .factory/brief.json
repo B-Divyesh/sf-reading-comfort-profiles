@@ -1,0 +1,12 @@
+{
+  "slug": "reading-comfort-profiles",
+  "title": "Reading Comfort Profiles",
+  "territory": "utilities",
+  "user": "Knowledge workers with low vision who need readable text, code, tables, and density settings across web-based work apps without changing every site manually.",
+  "smallest_useful_product": "Browser extension with keyboard-switchable per-domain profiles for base font, line height, code font, contrast, cursor/focus visibility, and optional table spacing; all settings stay locally.",
+  "success_measure": "In a four-week accessibility pilot, at least 70% of participants retain profiles on three or more work domains and report fewer manual zoom changes per day.",
+  "artifact_class": "browser-extension",
+  "monetization": "free",
+  "constraints": "Must not break keyboard navigation or application layouts; follow WCAG guidance; no browsing-history collection; provide a one-key disable switch.",
+  "state": "RESEARCHED"
+}
