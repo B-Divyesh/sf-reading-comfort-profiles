@@ -7,12 +7,13 @@
     "dev": "wxt",
     "dev:site": "vite --config vite.site.config.ts",
     "build:extension": "wxt build",
-    "build:site": "wxt build && node scripts/package-extension.mjs && vite build --config vite.site.config.ts",
+    "build:site": "wxt build && node scripts/package-extension.mjs && vite build --config vite.site.config.ts && node scripts/finalize-site.mjs",
     "build": "npm run build:site",
     "test": "vitest run",
     "test:e2e": "playwright test",
     "check": "tsc --noEmit",
-    "verify": "npm run check && npm test && npm run build && npm run test:e2e"
+    "lint": "tsc --noEmit",
+    "verify": "npm run lint && npm run check && npm test && npm run build && npm run test:e2e"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.1",

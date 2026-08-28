@@ -3,14 +3,18 @@ import AxeBuilder from '@axe-core/playwright';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-test('unpacked extension applies, switches, and pauses a domain profile', async ({}, testInfo) => {
+test('@claim:per-domain-profiles @claim:extension-privacy applies independent local profiles and supports profile creation with Enter', async ({}, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chromium', 'One extension smoke test is sufficient.');
   const userDataDir = mkdtempSync('/tmp/rcp-extension-test-');
-  const extensionPath = resolve('.output/chrome-mv3');
+  const extensionPath = resolve('dist/extension');
   const context = await chromium.launchPersistentContext(userDataDir, {
     channel: 'chromium',
     headless: true,
     args: [`--disable-extensions-except=${extensionPath}`, `--load-extension=${extensionPath}`]
+  });
+  const networkHosts = new Set<string>();
+  context.on('request', (request) => {
+    if (request.url().startsWith('http')) networkHosts.add(new URL(request.url()).hostname);
   });
 
   try {
@@ -36,9 +40,29 @@ test('unpacked extension applies, switches, and pauses a domain profile', async 
 
     await popup.selectOption('#profile-select', 'code-focus');
     await workPage.waitForSelector('html[data-reading-comfort="code-focus"]');
+    await popup.click('#new-profile-button');
+    await popup.fill('#profile-name', 'Quiet review');
+    await popup.press('#profile-name', 'Enter');
+    await expect(popup.locator('#profile-dialog')).not.toBeVisible();
+    await expect(popup.locator('#profile-select')).toHaveValue(/quiet-review-/);
+    await expect(popup.locator('#profile-select option:checked')).toHaveText('Quiet review');
+
+    const switchSizes = await popup.locator('.switch').evaluateAll((switches) => switches.map((item) => {
+      const box = item.getBoundingClientRect();
+      return { width: box.width, height: box.height };
+    }));
+    expect(switchSizes.every(({ width, height }) => width >= 44 && height >= 44)).toBeTruthy();
+
     await popup.click('#site-toggle');
     await workPage.waitForSelector('html:not([data-reading-comfort])');
     await expect(workPage.locator('#reading-comfort-profiles-style')).toHaveCount(0);
+    const localStorageEvidence = await popup.evaluate(async () => ({
+      manifestPermissions: chrome.runtime.getManifest().permissions ?? [],
+      keys: Object.keys(await chrome.storage.local.get())
+    }));
+    expect(localStorageEvidence.manifestPermissions).not.toContain('history');
+    expect(localStorageEvidence.keys).toEqual(['readingComfortState']);
+    expect([...networkHosts]).toEqual(['127.0.0.1']);
   } finally {
     await context.close();
     rmSync(userDataDir, { recursive: true, force: true });

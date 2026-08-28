@@ -27,6 +27,7 @@ const focusToggle = byId<HTMLButtonElement>('focus-toggle');
 const tableToggle = byId<HTMLButtonElement>('table-toggle');
 const profileDialog = byId<HTMLDialogElement>('profile-dialog');
 const deleteDialog = byId<HTMLDialogElement>('delete-dialog');
+const profileForm = byId<HTMLFormElement>('profile-form');
 
 void initialize();
 
@@ -154,7 +155,7 @@ byId('new-profile-button').addEventListener('click', () => {
   requestAnimationFrame(() => byId<HTMLInputElement>('profile-name').focus());
 });
 
-byId('create-profile').addEventListener('click', () => {
+function createProfile(): void {
   const nameInput = byId<HTMLInputElement>('profile-name');
   const name = nameInput.value.trim();
   if (!name) {
@@ -170,7 +171,15 @@ byId('create-profile').addEventListener('click', () => {
   profileDialog.close();
   render();
   void commit('Profile created');
+}
+
+profileForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  createProfile();
 });
+
+byId('close-profile-dialog').addEventListener('click', () => profileDialog.close('cancel'));
+byId('cancel-profile').addEventListener('click', () => profileDialog.close('cancel'));
 
 byId('delete-profile-button').addEventListener('click', () => {
   byId('delete-name').textContent = currentProfile().name;

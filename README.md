@@ -6,6 +6,10 @@ The product is intentionally local-first: it has no account, analytics, browsing
 
 Live site: <https://reading-comfort-profiles.sociobot.in>
 
+## Try the sample workspace
+
+Open <https://reading-comfort-profiles.sociobot.in/demo/> or select **Try it with sample data** on the landing page. The demo starts with a realistic access-review document, code decision, and table. It uses only the separate `demo:reading-comfort-profiles` browser-storage key. **Reset demo** restores the sample. **Start for real** removes the demo key before returning home.
+
 ## What v1 includes
 
 - Three useful starter profiles: Calm reading, Balanced work, and Code focus

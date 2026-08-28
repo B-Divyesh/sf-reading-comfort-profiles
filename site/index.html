@@ -3,12 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Save readable text, code, contrast, focus, and table settings for every work domain—with a free, private browser extension." />
+    <meta name="description" content="Adjust text, code, contrast, focus, and tables on work sites with a local browser extension for people with low vision." />
     <meta name="theme-color" content="#f3f7f5" />
     <link rel="canonical" href="https://reading-comfort-profiles.sociobot.in/" />
     <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <title>Reading Comfort Profiles — Fit the web to how you read</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://reading-comfort-profiles.sociobot.in/" />
+    <meta property="og:title" content="Reading Comfort Profiles — Adjust work sites" />
+    <meta property="og:description" content="Save readable text, code, contrast, focus, and table settings for each work domain." />
+    <meta property="og:image" content="https://reading-comfort-profiles.sociobot.in/images/social-preview.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Reading Comfort Profiles — Adjust work sites" />
+    <meta name="twitter:description" content="Save readable text, code, contrast, focus, and table settings for each work domain." />
+    <meta name="twitter:image" content="https://reading-comfort-profiles.sociobot.in/images/social-preview.jpg" />
+    <title>Reading Comfort Profiles — Adjust work sites</title>
     <link rel="stylesheet" href="/src/site.css" />
   </head>
   <body>
@@ -21,7 +33,7 @@
       </a>
       <nav aria-label="Primary navigation">
         <a href="#how-it-fits">How it fits</a>
-        <a href="#controls">Controls</a>
+        <a href="/demo/">Demo</a>
         <a class="nav-download" href="/downloads/reading-comfort-profiles-chrome.zip" download>Download <span aria-hidden="true">↓</span></a>
       </nav>
     </header>
@@ -29,14 +41,14 @@
     <main id="main">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="kicker"><span aria-hidden="true"></span> Free · private · local-first</p>
-          <h1 id="hero-title">Fit the web to <em>how you read.</em></h1>
-          <p class="hero-lede">Save comfortable text, code, contrast, focus, and table settings for each work domain. Switch profiles without touching browser zoom.</p>
+          <p class="kicker"><span aria-hidden="true"></span> Free · private · saved locally</p>
+          <h1 id="hero-title">Adjust work sites for <em>low-vision reading.</em></h1>
+          <p class="hero-lede">For knowledge workers with low vision who need different reading settings across web-based work apps.</p>
           <div class="hero-actions">
-            <a class="button primary" href="/downloads/reading-comfort-profiles-chrome.zip" download>Download for Chrome <span aria-hidden="true">↓</span></a>
-            <a class="text-link" href="#install">Installation guide <span aria-hidden="true">→</span></a>
+            <a class="button primary" href="/demo/">Try it with sample data <span aria-hidden="true">→</span></a>
+            <span class="action-note">Opens a separate demo. Nothing is saved to your profiles.</span>
           </div>
-          <p class="compatibility">Chrome, Edge, Brave, and other Chromium browsers · Manifest V3</p>
+          <p class="compatibility"><a href="/downloads/reading-comfort-profiles-chrome.zip" download>Download for Chromium</a> · Chrome, Edge, and Brave</p>
         </div>
         <figure class="hero-figure">
           <picture>
@@ -49,9 +61,9 @@
       </section>
 
       <section class="proof-strip" aria-label="Product assurances">
-        <p><span>01</span><strong>No browsing history</strong>Domains are stored only in your browser.</p>
-        <p><span>02</span><strong>Not another zoom tool</strong>Text, code, and tables adjust independently.</p>
-        <p><span>03</span><strong>One shortcut off</strong>Pause any site with <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd>.</p>
+        <p><span>01</span><strong>Private</strong>No browsing history or page content is collected.</p>
+        <p><span>02</span><strong>Works offline</strong>The product site reloads offline after your first visit.</p>
+        <p><span>03</span><strong>Free</strong>No account or payment is required.</p>
       </section>
 
       <section class="fit-section" id="how-it-fits" aria-labelledby="fit-title">
@@ -142,9 +154,9 @@
 
     <footer>
       <a class="wordmark footer-mark" href="/" aria-label="Reading Comfort Profiles home"><img src="/icon.svg" alt="" width="36" height="36" /><span>Reading Comfort <strong>Profiles</strong></span></a>
-      <p>Free accessibility software. No account. No analytics. No browsing-history collection.</p>
+      <p>Free accessibility software. Profiles stay in local extension storage.</p>
       <nav aria-label="Legal navigation"><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/B-Divyesh/sf-reading-comfort-profiles" rel="noreferrer">Source</a></nav>
-      <small>Original hero imagery was AI-generated for this product. © 2026 Sociobot.</small>
+      <small>Version 1.0.1 · Build repair-1 · Original hero imagery was AI-generated for this product. © 2026 Sociobot.</small>
     </footer>
     <script type="module" src="/src/main.ts"></script>
   </body>

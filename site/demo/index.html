@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Try Reading Comfort Profiles with isolated sample settings for a document, code review, and data table." />
+    <meta name="theme-color" content="#173d3a" />
+    <link rel="canonical" href="https://reading-comfort-profiles.sociobot.in/demo/" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <title>Demo — Reading Comfort Profiles</title>
+    <link rel="stylesheet" href="/src/site.css" />
+  </head>
+  <body data-page="demo">
+    <a class="skip-link" href="#main">Skip to demo</a>
+    <div class="demo-banner" aria-label="Demo controls">
+      <p>Demo — sample data, nothing is saved to your profiles</p>
+      <button id="reset-demo" type="button">Reset demo</button>
+      <a id="start-real" href="/">Start for real</a>
+    </div>
+    <div class="offline-banner" id="offline-banner" role="status" hidden>You’re offline. The saved demo still works.</div>
+    <header class="site-header">
+      <a class="wordmark" href="/" aria-label="Reading Comfort Profiles home"><img src="/icon.svg" alt="" width="40" height="40" /><span>Reading Comfort<br /><strong>Profiles</strong></span></a>
+      <nav aria-label="Primary navigation"><a href="/">Home</a><a href="/privacy/">Privacy</a><a class="nav-download" href="/downloads/reading-comfort-profiles-chrome.zip" download>Download <span aria-hidden="true">↓</span></a></nav>
+    </header>
+    <main id="main" class="demo-content">
+      <div class="demo-intro">
+        <div><p class="section-number">Sample workspace</p><h1>Fit a busy work page.</h1></div>
+        <p>Change the sample profile and see prose, code, and table spacing respond. This demo uses separate browser storage.</p>
+      </div>
+      <div class="demo-workspace">
+        <form class="demo-controls" id="demo-controls">
+          <h2>Reading settings</h2>
+          <label for="demo-profile">Sample profile</label>
+          <select id="demo-profile" name="profile">
+            <option value="calm">Calm reading</option>
+            <option value="balanced">Balanced work</option>
+            <option value="code">Code focus</option>
+          </select>
+          <label for="demo-font">Reading text <output id="demo-font-output" for="demo-font">19 px</output></label>
+          <input id="demo-font" name="fontSize" type="range" min="14" max="28" step="1" value="19" />
+          <label for="demo-line">Line spacing <output id="demo-line-output" for="demo-line">1.65×</output></label>
+          <input id="demo-line" name="lineHeight" type="range" min="1.2" max="2" step="0.05" value="1.65" />
+          <label for="demo-code">Code text <output id="demo-code-output" for="demo-code">17 px</output></label>
+          <input id="demo-code" name="codeSize" type="range" min="13" max="26" step="1" value="17" />
+          <label for="demo-contrast">Text contrast</label>
+          <select id="demo-contrast" name="contrast"><option value="standard">Standard</option><option value="stronger" selected>Stronger</option><option value="maximum">Maximum</option></select>
+          <label class="demo-check" for="demo-tables"><input id="demo-tables" name="roomyTables" type="checkbox" checked /> Roomier tables</label>
+        </form>
+        <article class="demo-preview" aria-labelledby="sample-title">
+          <header class="demo-preview-head"><h2 id="sample-title">Quarterly access review</h2><p>docs.example.com · Calm reading</p></header>
+          <div class="demo-document" id="demo-document">
+            <p><strong>Review note.</strong> The support team resolved 18 access requests this week. Two requests need a manager’s decision before Friday.</p>
+            <pre><code>if (request.needsReview) {
+  assignTo(manager);
+}</code></pre>
+            <table><thead><tr><th>Request</th><th>Status</th></tr></thead><tbody><tr><td>Finance export</td><td>Ready</td></tr><tr><td>Vendor portal</td><td>Review</td></tr><tr><td>Team archive</td><td>Ready</td></tr></tbody></table>
+          </div>
+        </article>
+      </div>
+    </main>
+    <footer><a class="wordmark footer-mark" href="/" aria-label="Reading Comfort Profiles home"><img src="/icon.svg" alt="" width="36" height="36" /><span>Reading Comfort <strong>Profiles</strong></span></a><p>Demo data uses the separate <code>demo:reading-comfort-profiles</code> key.</p><nav aria-label="Legal navigation"><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav><small>Version 1.0.1 · Build repair-1</small></footer>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
