@@ -34,9 +34,11 @@ Lighthouse 13 mobile run against the production build at local preview: Performa
 
 Static budgets from the final build: initial JavaScript 3.44 kB raw / 1.29 kB gzip, CSS 17.68 kB raw / 4.59 kB gzip, and the existing responsive mobile hero remains below the 300 kB budget. No third-party font, script, image, analytics, API, or telemetry path is shipped.
 
-## Deploy and use
+## Deployment and use
 
-Push the committed `main` branch. The work order’s static deployment consumes `dist/site/`; no infrastructure, DNS, or billing changes are required. For a local consumer verification:
+Deployed the static production build on 2026-08-28 using `/opt/fleet/lib/deploy-static.sh reading-comfort-profiles dist/site`. Azure Static Web Apps deployment `25aead04-7f09-446a-b351-7b9b5564ff5d` completed successfully for the existing `sf-reading-comfort-profiles` app. Live verification at `https://reading-comfort-profiles.sociobot.in/?build=a1350c0` found the new low-vision audience copy, demo action, and `Build repair-1` marker. The live response includes the configured CSP; the hashed CSS returns `Cache-Control: public, max-age=31536000, immutable`; and `/not-a-real-page` returns HTTP 404 with the product 404 page.
+
+For a local consumer verification:
 
 ```sh
 npm ci
@@ -47,4 +49,4 @@ npm run verify
 
 ## Known gaps
 
-There are no product-known release blockers. The public deployment’s final identity and response headers must be checked after the factory’s static publish has completed; this worker has not modified infrastructure.
+There are no known release blockers.
