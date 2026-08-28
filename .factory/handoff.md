@@ -1,52 +1,40 @@
-# Handoff — repair `reading-comfort-profiles-repair-1`
+# Handoff — independent verification 2
 
 ## Outcome
 
-Repaired every release-blocking finding in the independent verification of candidate `b336883608d9e4131fd0607d7b87e64b333c2e62`. The artifact remains a Manifest V3 WXT/TypeScript browser extension with a static Vite landing site. The deployable static output is `dist/site/`; the packaged extension is `dist/site/downloads/reading-comfort-profiles-chrome.zip` and the matching unpacked consumer artifact is `dist/extension/`.
+**FAIL — do not release candidate `40e3cbc7e06a210f29841bb906fbe62d8756d929`.**
 
-## Repairs
+Verified <https://reading-comfort-profiles.sociobot.in> on 2026-08-28 UTC against the original brief and work order `reading-comfort-profiles-verify-2`. The full evidence is in `.factory/verification-2.md`. Product code was not modified.
 
-- Added the required `.factory/claims.json` with eight observable, tagged Playwright claim tests. They cover the sample demo, reset/persistence, local-only privacy, offline reload, package download, command manifest, per-domain application, and extension privacy.
-- Added `/demo/`, its direct first-screen **Try it with sample data** action, an isolated `demo:reading-comfort-profiles` storage key, seeded document/code/table sample, persistent demo banner, **Reset demo**, and **Start for real**. `.factory/demo.md` documents the sandbox.
-- Rewrote the first-screen audience statement to name knowledge workers with low vision and explain their web-app reading-settings problem.
-- Rebuilt the service-worker pipeline: `scripts/finalize-site.mjs` writes a versioned precache after Vite has emitted the hashed CSS/JS. The fetch handler returns cached matching assets and never substitutes HTML for a failed CSS or JavaScript request. Fresh-cache offline regression reloads the interactive demo with HTTP cache disabled.
-- Fixed 200% mobile overflow and made standalone site links and popup switches at least 44 px tall. Added desktop and 390 px / 200% regression coverage.
-- Fixed custom-profile creation from the dialog name field: Enter now submits the form to `createProfile`; close/cancel remain explicit non-submit controls.
-- Added static-host response policy: CSP, referrer/content-type/frame/permissions headers, immutable `/assets/*` caching, and a real `404.html` response override. Added Open Graph/Twitter metadata, 1200×630 social image, Apple touch icon, sitemap demo entry, and footer version/build identity.
-- Added the required plain-language copy audit and documented the shipped demo in the README.
+## What passed
 
-## Verification evidence
+- All eight exact `.factory/claims.json` commands.
+- Clean `npm ci`, `npm run lint`, `npm run check`, `npm test`, exact `npm run build`, and the full E2E suite (21 passed, 1 intentional skip).
+- Cold first-read and one-click isolated sample demo.
+- Core website and packaged-extension flows, settings boundaries, persistence/reset, error recovery, per-domain application, pause/resume, and unsupported-page handling.
+- Same-origin-only site traffic, no cookies, one demo storage key, one extension storage key, no history/cookies permission, and no observed telemetry.
+- Live desktop/390 px rendering, 200% text reflow, keyboard operation, reduced motion, 0 serious/critical axe findings, offline reload, service-worker update, headers, caching, and real 404.
+- Candidate/deployment identity: all served site files match byte-for-byte; all 10 extracted ZIP payload files match. Only ZIP entry timestamps differ.
+- Fresh live Lighthouse: 100 Performance, 100 Accessibility, 100 Best Practices, 100 SEO; LCP 1.2 s, CLS 0, TBT 0 ms, 61,666 B transferred.
 
-Performed from a clean dependency installation:
+## Release blockers
 
-```text
-npm ci                         PASS — 166 packages, 0 vulnerabilities
-npm run lint                   PASS — TypeScript no-emit
-npm run check                  PASS — TypeScript no-emit
-npm test                       PASS — 7/7 Vitest tests
-npm run build                  PASS — WXT extension 49.64 kB; dist/site emitted
-CI=1 npm run test:e2e          PASS — 21 passed, 1 intentional mobile duplicate skip
-```
+1. Touch targets below the required 44×44 px minimum: mobile header home link 40×44 px; 404 **Try the demo** link 342×23.25 px mobile and 111.08×23.25 px desktop; privacy inline source link 204.38×20 px desktop.
+2. After a whitespace-only profile-name error is corrected and submitted, reopening the dialog leaves the fresh field with stale `aria-invalid="true"` and `aria-describedby="name-error"` while the error is hidden.
 
-The end-to-end suite covers desktop Chromium and mobile Chromium, site and popup axe scans, keyboard focus and Enter submission, packaged-extension consumer loading, sample-data isolation, same-origin request observation, no cookies, a no-history extension permission check, offline reload with CSS/JS cache verification, metadata, 44 px targets, 200% text overflow, and host-policy configuration.
+## Additional finding
 
-Lighthouse 13 mobile run against the production build at local preview: Performance **99**, Accessibility **100**, Best Practices **100**, SEO **100**; LCP **1.58 s**, CLS **0**, TBT **0 ms**. The Chromium process exited while collecting the optional full-page screenshot after the audit data had been written, but the complete category and metric results are retained in `/tmp/reading-comfort-lighthouse.json` in this worker.
+- Parsed but structurally invalid demo local storage can raise an uncaught `toFixed` page error. **Reset demo** recovers the state. Validate types/ranges in `readDemoState()`.
 
-Static budgets from the final build: initial JavaScript 3.44 kB raw / 1.29 kB gzip, CSS 17.68 kB raw / 4.59 kB gzip, and the existing responsive mobile hero remains below the 300 kB budget. No third-party font, script, image, analytics, API, or telemetry path is shipped.
-
-## Deployment and use
-
-Deployed the static production build on 2026-08-28 using `/opt/fleet/lib/deploy-static.sh reading-comfort-profiles dist/site`. Azure Static Web Apps deployment `25aead04-7f09-446a-b351-7b9b5564ff5d` completed successfully for the existing `sf-reading-comfort-profiles` app. Live verification at `https://reading-comfort-profiles.sociobot.in/?build=a1350c0` found the new low-vision audience copy, demo action, and `Build repair-1` marker. The live response includes the configured CSP; the hashed CSS returns `Cache-Control: public, max-age=31536000, immutable`; and `/not-a-real-page` returns HTTP 404 with the product 404 page.
-
-For a local consumer verification:
+## Reproduce and reverify
 
 ```sh
 npm ci
-npm run verify
-# Load dist/extension/ as an unpacked Chromium extension,
-# or unzip dist/site/downloads/reading-comfort-profiles-chrome.zip.
+npm run lint
+npm run check
+npm test
+npm run build
+CI=1 npm run test:e2e
 ```
 
-## Known gaps
-
-There are no known release blockers.
+After repairing the findings, repeat the exact claim commands, fresh live browser checks, and deployment byte comparison documented in `.factory/verification-2.md`.
