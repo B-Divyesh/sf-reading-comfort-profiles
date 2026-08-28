@@ -1,0 +1,10 @@
+{
+  "name": "Reading Comfort Profiles",
+  "short_name": "Reading Comfort",
+  "description": "Local-first reading profiles for web-based work.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f3f7f5",
+  "theme_color": "#f3f7f5",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

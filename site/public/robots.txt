@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://reading-comfort-profiles.sociobot.in/sitemap.xml

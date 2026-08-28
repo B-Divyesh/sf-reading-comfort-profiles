@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Reading Comfort Profiles">
+  <rect width="64" height="64" rx="20" fill="#ddeae7"/>
+  <path d="M16 18h32M16 27h25M16 36h29M16 45h18" fill="none" stroke="#214f46" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="45" cy="44" r="7" fill="#b7e065" stroke="#173d3a" stroke-width="3"/>
+</svg>
