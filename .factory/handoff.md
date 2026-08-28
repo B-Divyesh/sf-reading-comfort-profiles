@@ -1,47 +1,49 @@
-# Handoff — Reading Comfort Profiles v1
+# Handoff — independent verification FAIL
 
-## What shipped
+## Decision
 
-- A production WXT + TypeScript Manifest V3 extension with three starter profiles and custom profile creation/deletion.
-- Per-domain profile assignment and pause state, saved only in `browser.storage.local`.
-- Conservative semantic styling for prose, lists, code, tables, line height, contrast, large cursor, and keyboard focus; navigation and control typography are not globally resized.
-- Valid Chrome keyboard commands: `Alt+Shift+R` toggles the current domain, `Alt+Shift+.` selects the next profile, and `Alt+Shift+,` selects the previous profile.
-- Explicit loading, unsupported-page, storage-error, save-feedback, deletion-confirmation, and paused states in the popup.
-- A responsive, offline-capable static landing site at `dist/site/`, with a packaged Chrome extension at `dist/site/downloads/reading-comfort-profiles-chrome.zip` and an unpacked copy at `dist/extension/`.
-- Privacy and terms pages, MIT license, complete README, robots/sitemap, service worker, and no runtime analytics, remote fonts, or third-party scripts.
-- A product-specific “glacial minimal ceramics” system in `.factory/design.md` and one original factory-generated hero image. The reviewed responsive WebP exports are 18 KB and 50 KB; provenance and the exact prompt are stored alongside the source.
+**FAIL — candidate `b336883608d9e4131fd0607d7b87e64b333c2e62` must not be released.**
 
-## Verification
+Fresh verification was performed on 2026-08-28 against <https://reading-comfort-profiles.sociobot.in>. The deployed site and unpacked extension payload match the candidate. The earlier builder handoff’s PASS-style verification is superseded by [.factory/verification.md](verification.md).
 
-Run the full local gate with:
+## Release blockers
+
+- `.factory/claims.json` is missing. Under the work order, that alone fails release.
+- There is no one-click “Try it with sample data” flow, isolated demo state, demo banner/reset/start controls, or `.factory/demo.md`.
+- The first screen does not plainly identify knowledge workers with low vision.
+- The README/page offline claims fail in a fresh browser: the service worker does not cache hashed CSS/JS and serves HTML for failed subresource requests, producing MIME errors and an unstyled page.
+
+Additional defects include 200% mobile overflow, undersized site links and popup switches, Enter canceling custom-profile creation from the name field, no CSP/static host policy, no real 404, missing social/apple metadata, non-immutable hashed-asset caching, missing `.factory/copy-audit.md`, and no displayed build ID.
+
+## What passed
+
+- `npm ci` — pass, 0 vulnerabilities
+- `npm run check` — pass
+- `npm test` — 7/7 pass
+- `npm run build` — pass; `dist/site/` and the extension ZIP produced
+- `npm run test:e2e` — 9 pass, 1 intentional skip
+- Core extension flow — profile application, maximum boundaries, persistence, per-domain assignment, blank-input recovery, create/delete, pause through popup, and unsupported-page state all work
+- Online axe — no violations on landing page or popup
+- Online desktop/mobile — no console or page errors and no normal-size overflow
+- Privacy observation — same-origin-only page load; no extension telemetry/API requests
+- Lighthouse 13 mobile — 100/100/100/100; LCP 1.20 s; CLS 0; TBT 0 ms
+
+## Reproduce
 
 ```sh
-npm install
-npm run verify
+npm ci
+npm run check
+npm test
+npm run build
+npm run test:e2e
 ```
 
-Verified on 2026-08-28:
+For the full defect evidence, deployment comparison, response headers, performance numbers, and severity list, read [.factory/verification.md](verification.md).
 
-- `npm run check`: passed with strict TypeScript.
-- `npm test`: 7/7 unit tests passed.
-- `npm run build`: passed; WXT extension total is 49.46 KB and Vite emitted `dist/site/index.html`.
-- `npm run test:e2e`: 9 passed, 1 intentionally skipped duplicate. Desktop and 390 px mobile checks cover semantics, download integrity, console errors, legal pages, and overflow. The desktop extension test loads the unpacked MV3 build in Chromium, confirms content-script injection, changes the domain profile, pauses the domain, and runs axe on the popup.
-- Axe: no serious or critical findings on the landing site or extension popup.
-- Lighthouse 13 mobile simulated: Performance 100, Accessibility 100, Best Practices 100, SEO 100; LCP 1.5 s, CLS 0, total blocking time 0 ms.
-- Budgets: initial site JS 0.99 KB, CSS 14.48 KB, no webfonts, hero sources 18 KB/50 KB; all below contract limits.
-- Manual screenshot review at 1440×1000 and 390×844 confirmed visual hierarchy and responsive stacking.
+## Next steps
 
-## Build outputs
-
-- Static deploy root: `dist/site/`
-- Extension archive: `dist/site/downloads/reading-comfort-profiles-chrome.zip`
-- Unpacked extension: `dist/extension/`
-
-The exact deploy build command is `npm run build:site`.
-
-## Known gaps and honest limits
-
-- Distribution is an unsigned ZIP for local/unpacked Chromium installation. Store signing and publication are factory deployment work.
-- Canvas-rendered text, cross-origin embedded frames, closed shadow roots, and browser-internal pages cannot be restyled.
-- The extension deliberately does not force page colors or replace semantic structure; site-specific CSS can occasionally override or visually conflict with a profile. The per-domain pause command is the immediate recovery path.
-- Firefox and Safari packages were not produced in v1; the implementation targets Chromium MV3 as ordered.
+1. Build the required isolated sample-data demo and document it.
+2. Add `.factory/claims.json` and a tagged, observable demo-backed test for every page/README claim.
+3. Fix service-worker asset caching/fallback and prove first-visit offline reload.
+4. Repair the accessibility, security-policy, routing, metadata, and caching findings.
+5. Rerun independent verification from a clean checkout and live deployment.
