@@ -41,11 +41,21 @@ test('@claim:per-domain-profiles @claim:extension-privacy applies independent lo
     await popup.selectOption('#profile-select', 'code-focus');
     await workPage.waitForSelector('html[data-reading-comfort="code-focus"]');
     await popup.click('#new-profile-button');
+    await popup.fill('#profile-name', '   ');
+    await popup.press('#profile-name', 'Enter');
+    await expect(popup.locator('#profile-dialog')).toBeVisible();
+    await expect(popup.locator('#profile-name')).toHaveAttribute('aria-invalid', 'true');
+    await expect(popup.locator('#profile-name')).toHaveAttribute('aria-describedby', 'name-error');
     await popup.fill('#profile-name', 'Quiet review');
     await popup.press('#profile-name', 'Enter');
     await expect(popup.locator('#profile-dialog')).not.toBeVisible();
     await expect(popup.locator('#profile-select')).toHaveValue(/quiet-review-/);
     await expect(popup.locator('#profile-select option:checked')).toHaveText('Quiet review');
+    await popup.click('#new-profile-button');
+    await expect(popup.locator('#profile-name')).not.toHaveAttribute('aria-invalid', 'true');
+    await expect(popup.locator('#profile-name')).not.toHaveAttribute('aria-describedby', 'name-error');
+    await expect(popup.locator('#name-error')).toBeHidden();
+    await popup.click('#cancel-profile');
 
     const switchSizes = await popup.locator('.switch').evaluateAll((switches) => switches.map((item) => {
       const box = item.getBoundingClientRect();

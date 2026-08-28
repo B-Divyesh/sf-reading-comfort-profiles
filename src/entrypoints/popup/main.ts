@@ -28,6 +28,8 @@ const tableToggle = byId<HTMLButtonElement>('table-toggle');
 const profileDialog = byId<HTMLDialogElement>('profile-dialog');
 const deleteDialog = byId<HTMLDialogElement>('delete-dialog');
 const profileForm = byId<HTMLFormElement>('profile-form');
+const profileName = byId<HTMLInputElement>('profile-name');
+const profileNameError = byId('name-error');
 
 void initialize();
 
@@ -148,23 +150,33 @@ function updateOutputs(): void {
   byId<HTMLOutputElement>('code-size-output').value = `${codeSize.value} px`;
 }
 
+function clearProfileNameError(): void {
+  profileNameError.classList.add('hidden');
+  profileName.removeAttribute('aria-invalid');
+  profileName.removeAttribute('aria-describedby');
+}
+
 byId('new-profile-button').addEventListener('click', () => {
-  byId<HTMLInputElement>('profile-name').value = '';
-  byId('name-error').classList.add('hidden');
+  profileName.value = '';
+  clearProfileNameError();
   profileDialog.showModal();
-  requestAnimationFrame(() => byId<HTMLInputElement>('profile-name').focus());
+  requestAnimationFrame(() => profileName.focus());
+});
+
+profileName.addEventListener('input', () => {
+  if (profileName.value.trim()) clearProfileNameError();
 });
 
 function createProfile(): void {
-  const nameInput = byId<HTMLInputElement>('profile-name');
-  const name = nameInput.value.trim();
+  const name = profileName.value.trim();
   if (!name) {
-    byId('name-error').classList.remove('hidden');
-    nameInput.setAttribute('aria-invalid', 'true');
-    nameInput.setAttribute('aria-describedby', 'name-error');
-    nameInput.focus();
+    profileNameError.classList.remove('hidden');
+    profileName.setAttribute('aria-invalid', 'true');
+    profileName.setAttribute('aria-describedby', 'name-error');
+    profileName.focus();
     return;
   }
+  clearProfileNameError();
   const profile = { ...currentProfile(), id: uniqueProfileId(name), name };
   state.profiles.push(profile);
   state.domainProfiles[domain] = profile.id;

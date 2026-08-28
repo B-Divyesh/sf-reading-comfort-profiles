@@ -6,7 +6,7 @@ export default defineConfig({
   manifest: {
     name: 'Reading Comfort Profiles',
     description: 'Save readable typography, code, contrast, focus, and table settings for each work domain.',
-    version: '1.0.0',
+    version: '1.0.2',
     minimum_chrome_version: '109',
     icons: {
       16: 'icon/16.png',

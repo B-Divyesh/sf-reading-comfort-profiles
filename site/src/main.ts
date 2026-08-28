@@ -91,12 +91,38 @@ function initializeDemo(): void {
 
 function readDemoState(): DemoState {
   try {
-    const value = JSON.parse(localStorage.getItem(DEMO_KEY) ?? 'null') as Partial<DemoState> | null;
-    if (value && value.profile && sampleProfiles[value.profile]) return { ...sampleProfiles[value.profile], ...value };
+    const value: unknown = JSON.parse(localStorage.getItem(DEMO_KEY) ?? 'null');
+    if (isDemoState(value)) return value;
   } catch {
     // A clean sample is safer than carrying malformed demo-only data forward.
   }
   return { ...sampleProfiles.calm };
+}
+
+function isDemoState(value: unknown): value is DemoState {
+  if (!value || typeof value !== 'object') return false;
+  const candidate = value as Record<string, unknown>;
+  const profile = candidate.profile;
+  const contrast = candidate.contrast;
+  return typeof profile === 'string'
+    && Object.hasOwn(sampleProfiles, profile)
+    && typeof candidate.fontSize === 'number'
+    && Number.isFinite(candidate.fontSize)
+    && Number.isInteger(candidate.fontSize)
+    && candidate.fontSize >= 14
+    && candidate.fontSize <= 28
+    && typeof candidate.lineHeight === 'number'
+    && Number.isFinite(candidate.lineHeight)
+    && candidate.lineHeight >= 1.2
+    && candidate.lineHeight <= 2
+    && typeof candidate.codeSize === 'number'
+    && Number.isFinite(candidate.codeSize)
+    && Number.isInteger(candidate.codeSize)
+    && candidate.codeSize >= 13
+    && candidate.codeSize <= 26
+    && typeof contrast === 'string'
+    && ['standard', 'stronger', 'maximum'].includes(contrast)
+    && typeof candidate.roomyTables === 'boolean';
 }
 
 function saveDemoState(state: DemoState): void {

@@ -142,6 +142,50 @@ test('mobile and 200% text layouts do not overflow and standalone targets reach 
   expect(targets.every((target) => target.height >= 44), JSON.stringify(targets)).toBeTruthy();
 });
 
+test('verifier regression: standalone links are at least 44 by 44 CSS pixels', async ({ page }) => {
+  const expectTargetSize = async (selector: string): Promise<void> => {
+    const box = await page.locator(selector).boundingBox();
+    expect(box, selector).not.toBeNull();
+    expect(box!.width, `${selector} width`).toBeGreaterThanOrEqual(44);
+    expect(box!.height, `${selector} height`).toBeGreaterThanOrEqual(44);
+  };
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await expectTargetSize('.site-header > .wordmark');
+
+  await page.goto('/404.html');
+  await expectTargetSize('.hero-actions .text-link');
+
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/privacy/');
+  await expectTargetSize('.legal-content a[href^="https://github.com/"]');
+});
+
+test('verifier regression: structurally invalid demo storage safely resets', async ({ page }) => {
+  const pageErrors: string[] = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+  await page.addInitScript(() => {
+    localStorage.setItem('demo:reading-comfort-profiles', JSON.stringify({
+      profile: 'calm',
+      fontSize: 19,
+      lineHeight: null,
+      codeSize: 17,
+      contrast: 'stronger',
+      roomyTables: true
+    }));
+  });
+
+  await page.goto('/demo/');
+  await expect(page.locator('#demo-line')).toHaveValue('1.65');
+  await expect(page.locator('#demo-line-output')).toHaveText('1.65×');
+  await expect(page.getByRole('heading', { name: 'Quarterly access review' })).toBeVisible();
+  expect(pageErrors).toEqual([]);
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('demo:reading-comfort-profiles') ?? 'null'))).toMatchObject({
+    profile: 'calm', lineHeight: 1.65
+  });
+});
+
 test('host policy defines CSP, immutable hashed assets, and a true 404 override', () => {
   const policy = JSON.parse(readFileSync('site/public/staticwebapp.config.json', 'utf8')) as {
     globalHeaders: Record<string, string>;
