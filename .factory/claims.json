@@ -11,7 +11,7 @@
     "claim": "The sample changes text, code, contrast, and table settings and can be reset.",
     "where": "/demo, landing product description, README",
     "test": "npm run test:e2e -- --grep @claim:profile-settings --project desktop-chromium",
-    "sandbox": "fresh demo context; change and persist a setting; reload; reset; leave demo and assert demo data is discarded"
+    "sandbox": "fresh demo context; change and persist a setting; reload; reset; leave demo; assert only the demo data is discarded and an unrelated local record remains"
   },
   {
     "id": "privacy-local",

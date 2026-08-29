@@ -1,6 +1,6 @@
 # Landing-page copy audit
 
-Audited 2026-08-29 for polish round 4 against `site/index.html`, the shared public chrome, and `README.md`. Counts treat numbers and hyphenated terms as one word. No sentence exceeds 22 words. No banned marketing word appears. Capability statements map to `.factory/claims.json`.
+Audited 2026-08-29 for polish round 5 against `site/index.html`, the demo, shared public chrome, and `README.md`. Counts treat numbers and hyphenated terms as one word. This inventory covers every reader-facing sentence, heading, label, action, and standalone fact; code samples and keyboard keycaps are recorded as code rather than prose. No sentence exceeds 22 words. No banned marketing word appears. Capability statements map to `.factory/claims.json`.
 
 ## First screen
 
@@ -71,7 +71,7 @@ Audited 2026-08-29 for polish round 4 against `site/index.html`, the shared publ
 | --- | ---: | --- |
 | Adjust the sample work page. | 6 | Pass — names the demo task. |
 | Change the sample profile and see prose, code, and table spacing respond. | 12 | Pass — `sample-demo`, `profile-settings`. |
-| This demo uses separate browser storage. | 6 | Pass — `privacy-local`. |
+| The sample settings stay separate from your profiles. | 8 | Pass — `privacy-local`. |
 | Quarterly access review | 3 | Pass — realistic sample heading; `sample-demo`. |
 | Review note. The support team resolved 18 access requests this week. | 10 | Pass — realistic sample content visible in the first phone viewport; `sample-demo`. |
 | Separate controls for reading text, line spacing, and code text | 9 | Pass — one term per control, matching the UI and `semantic-layout`. |
@@ -79,6 +79,17 @@ Audited 2026-08-29 for polish round 4 against `site/index.html`, the shared publ
 | Privacy / Terms / Source | 3 | Pass — identical footer links on every route. |
 
 Short interface labels also pass: Profiles, Demo, Download, Private, Works offline, Free, Document, Code review, Dashboard, Reading controls, Text and line spacing, Code text size, Pointer and focus outline, Optional table cell spacing, Install, Download extension, Unzip the download, Open your extension manager, Load the folder, Set a profile for your first work site, Download for free, Privacy, Terms, and Source.
+
+## Round-five wording repairs
+
+| Visible copy | Words | Result |
+| --- | ---: | --- |
+| Leave demo | 2 | Pass — names the result of returning home. `@claim:profile-settings` asserts this exact label, removes only demo settings, and preserves an unrelated local record. |
+| The sample settings are stored separately in your browser. | 9 | Pass — plain privacy explanation in README; `privacy-local`. |
+| Leave demo removes the sample settings before returning home. | 10 | Pass — README action and result match the banner; `profile-settings`. |
+| The site works offline after the first visit. | 9 | Pass — plain README explanation; `offline-reload`. |
+| It includes Privacy and Terms pages. | 6 | Pass — plain README route description; public-route regression. |
+| The extension changes how pages look. | 6 | Pass — plain README description; `content-preservation`. |
 
 ## Terminology
 

@@ -86,9 +86,13 @@ test('@claim:profile-settings changes, saves, and resets the sample profile', as
   await expect(font).toHaveValue('24');
   await page.getByRole('button', { name: 'Reset demo' }).click();
   await expect(font).toHaveValue('19');
-  await page.getByRole('link', { name: 'Start for real' }).click();
+  await page.evaluate(() => localStorage.setItem('real:sentinel', 'keep me'));
+  await page.getByRole('link', { name: 'Leave demo' }).click();
   await expect(page).toHaveURL(/\/$/);
-  expect(await page.evaluate(() => localStorage.getItem('demo:reading-comfort-profiles'))).toBeNull();
+  expect(await page.evaluate(() => ({
+    demo: localStorage.getItem('demo:reading-comfort-profiles'),
+    real: localStorage.getItem('real:sentinel')
+  }))).toEqual({ demo: null, real: 'keep me' });
 });
 
 test('@claim:privacy-local keeps the complete demo flow same-origin and in demo storage', async ({ page }) => {

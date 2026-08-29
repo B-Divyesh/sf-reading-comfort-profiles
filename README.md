@@ -12,9 +12,9 @@ Live site: <https://reading-comfort-profiles.sociobot.in>
 
 Open <https://reading-comfort-profiles.sociobot.in/?demo=1> or select **Try it with sample data** on the landing page.
 
-The demo includes an access-review document, code decision, and table. It uses only the separate `demo:reading-comfort-profiles` browser-storage key.
+The demo includes an access-review document, code decision, and table. The sample settings are stored separately in your browser.
 
-**Reset demo** restores the sample. **Start for real** removes the demo key before returning home.
+**Reset demo** restores the sample. **Leave demo** removes the sample settings before returning home.
 
 ## What v1 includes
 
@@ -26,9 +26,9 @@ The demo includes an access-review document, code decision, and table. It uses o
 - Optional large pointer, high-contrast focus ring, and roomier tables
 - Keyboard commands for pause/resume and profile cycling
 - A Chromium package tested in Chromium
-- Offline-capable static product site with privacy and terms pages
+- The site works offline after the first visit. It includes Privacy and Terms pages.
 
-The extension changes presentation through CSS. It does not edit page text or element structure.
+The extension changes how pages look. It does not edit page text or element structure.
 
 ## Develop
 

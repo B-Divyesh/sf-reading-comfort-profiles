@@ -1,6 +1,6 @@
 const SOURCE_URL = 'https://github.com/B-Divyesh/sf-reading-comfort-profiles';
-const VERSION = '1.0.6';
-const BUILD = 'polish-4';
+const VERSION = '1.0.7';
+const BUILD = 'polish-5';
 
 function currentRoute(): 'profiles' | 'demo' | 'privacy' | 'terms' | null {
   if (location.pathname.startsWith('/demo')) return 'demo';
