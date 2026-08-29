@@ -24,6 +24,20 @@ test('landing page presents the audience, demo, and working download', async ({ 
   expect(consoleErrors).toEqual([]);
 });
 
+test('desktop first screen keeps the sample action and its result visible', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/');
+  const action = page.getByRole('link', { name: /Try it with sample data/ });
+  const note = page.locator('#demo-action-note');
+  await expect(action).toBeVisible();
+  await expect(note).toHaveText('Opens an isolated demo; your profiles stay unchanged.');
+  const [actionBox, noteBox] = await Promise.all([action.boundingBox(), note.boundingBox()]);
+  expect(actionBox).not.toBeNull();
+  expect(noteBox).not.toBeNull();
+  expect(actionBox!.y + actionBox!.height).toBeLessThanOrEqual(900);
+  expect(noteBox!.y + noteBox!.height).toBeLessThanOrEqual(900);
+});
+
 test('@claim:sample-demo opens a seeded, isolated demo in one click', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('link', { name: /Try it with sample data/ }).click();

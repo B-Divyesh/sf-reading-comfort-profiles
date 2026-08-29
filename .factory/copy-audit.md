@@ -12,8 +12,7 @@ Audited 2026-08-28 against `site/index.html`. Counts treat numbers and hyphenate
 | Adjust work sites for low-vision reading. | 7 | Pass — direct job headline. |
 | For knowledge workers with low vision who need different reading settings across web-based work apps. | 15 | Pass — audience and situation. |
 | Try it with sample data | 5 | Pass — `sample-demo`. |
-| Opens a separate demo. | 4 | Pass — `sample-demo`. |
-| Nothing is saved to your profiles. | 7 | Pass — `sample-demo`. |
+| Opens an isolated demo; your profiles stay unchanged. | 8 | Pass — `sample-demo`. |
 | Download for Chromium | 3 | Pass — direct action. |
 | Tested in Chromium | 3 | Pass — `chromium-package`. |
 | Use profiles for documents, code, and tables. | 7 | Pass — concrete illustration caption. |
