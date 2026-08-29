@@ -1,0 +1,126 @@
+{
+  "origin": "https://reading-comfort-profiles.sociobot.in",
+  "errors": [],
+  "expected404ConsoleEntries": 1,
+  "externalRequests": [],
+  "routes": {
+    "/": {
+      "title": "Reading Comfort Profiles — Adjust work sites",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "canonical": "https://reading-comfort-profiles.sociobot.in/"
+    },
+    "/demo/": {
+      "title": "Demo — Reading Comfort Profiles",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "canonical": "https://reading-comfort-profiles.sociobot.in/demo/"
+    },
+    "/privacy/": {
+      "title": "Privacy — Reading Comfort Profiles",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "canonical": "https://reading-comfort-profiles.sociobot.in/privacy/"
+    },
+    "/terms/": {
+      "title": "Terms — Reading Comfort Profiles",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "canonical": "https://reading-comfort-profiles.sociobot.in/terms/"
+    },
+    "/404.html": {
+      "title": "Page not found — Reading Comfort Profiles",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "canonical": "https://reading-comfort-profiles.sociobot.in/404.html"
+    },
+    "/missing-polish-5-live": {
+      "status": 404,
+      "title": "Page not found — Reading Comfort Profiles",
+      "h1": 1
+    }
+  },
+  "demo": {
+    "url": "https://reading-comfort-profiles.sociobot.in/demo/?demo=1",
+    "title": "Demo — Reading Comfort Profiles",
+    "banner": "Demo — sample data, nothing is saved to your profiles\n\nReset demo\nLeave demo",
+    "leaveLabel": "Leave demo",
+    "headingFocused": true,
+    "announcement": "Demo — Reading Comfort Profiles",
+    "headingBox": {
+      "x": 41,
+      "y": 602.96875,
+      "width": 308,
+      "height": 71.28125
+    },
+    "noteBox": {
+      "x": 37,
+      "y": 756.015625,
+      "width": 316,
+      "height": 156.71875
+    },
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "storageOnEntry": [
+      "demo:reading-comfort-profiles"
+    ],
+    "persistedValue": "24",
+    "resetValue": "19",
+    "exitUrl": "https://reading-comfort-profiles.sociobot.in/",
+    "storageAfterExit": {
+      "demo": null,
+      "sentinel": "unchanged"
+    }
+  },
+  "focus": {
+    "desktopAction": {
+      "x": 60,
+      "y": 708.828125,
+      "width": 281.28125,
+      "height": 52
+    },
+    "desktopNote": {
+      "x": 361.28125,
+      "y": 714.53125,
+      "width": 298.71875,
+      "height": 40.59375
+    },
+    "forward": {
+      "url": "https://reading-comfort-profiles.sociobot.in/demo/?demo=1",
+      "headingFocused": true,
+      "announcement": "Demo — Reading Comfort Profiles"
+    },
+    "back": {
+      "url": "https://reading-comfort-profiles.sociobot.in/",
+      "headingFocused": true,
+      "announcement": "Reading Comfort Profiles — Adjust work sites"
+    }
+  },
+  "offline": {
+    "controlled": true,
+    "title": "Demo — Reading Comfort Profiles",
+    "codeProfile": "docs.example.com · Code focus",
+    "failedRequests": []
+  },
+  "axe": {
+    "/": [],
+    "/demo/": [],
+    "/privacy/": [],
+    "/terms/": [],
+    "/404.html": []
+  },
+  "links": {
+    "/": 200,
+    "/privacy/": 200,
+    "/downloads/reading-comfort-profiles-chrome.zip": 200,
+    "/terms/": 200
+  },
+  "generatedAt": "2026-08-29T10:34:24.347Z"
+}
