@@ -1,6 +1,6 @@
 # Landing-page copy audit
 
-Audited 2026-08-28 against `site/index.html`. Counts treat numbers and hyphenated terms as one word. No sentence exceeds 22 words. No banned marketing word appears. Capability statements map to `.factory/claims.json`.
+Audited 2026-08-29 against `site/index.html`, the shared public chrome, and `README.md`. Counts treat numbers and hyphenated terms as one word. No sentence exceeds 22 words. No banned marketing word appears. Capability statements map to `.factory/claims.json`.
 
 ## First screen
 
@@ -64,6 +64,19 @@ Audited 2026-08-28 against `site/index.html`. Counts treat numbers and hyphenate
 | Built by Param Factory. | 4 | Pass — attribution. |
 | Original hero imagery was AI-generated for this product. | 8 | Pass — provenance, not a product capability. |
 
+## Demo, shared navigation, and README terminology
+
+| Visible copy | Words | Result |
+| --- | ---: | --- |
+| Adjust the sample work page. | 6 | Pass — names the demo task. |
+| Change the sample profile and see prose, code, and table spacing respond. | 12 | Pass — `sample-demo`, `profile-settings`. |
+| This demo uses separate browser storage. | 6 | Pass — `privacy-local`. |
+| Quarterly access review | 3 | Pass — realistic sample heading; `sample-demo`. |
+| Review note. The support team resolved 18 access requests this week. | 10 | Pass — realistic sample content visible in the first phone viewport; `sample-demo`. |
+| Separate controls for reading text, line spacing, and code text | 9 | Pass — one term per control, matching the UI and `semantic-layout`. |
+| Profiles / Demo / Privacy / Download | 4 | Pass — identical primary navigation on every route. |
+| Privacy / Terms / Source | 3 | Pass — identical footer links on every route. |
+
 Short interface labels also pass: Profiles, Demo, Download, Private, Works offline, Free, Document, Code review, Dashboard, Reading controls, Text and line spacing, Code text size, Pointer and focus outline, Optional table cell spacing, Install, Download extension, Unzip the download, Open your extension manager, Load the folder, Set a profile for your first work site, Download for free, Privacy, Terms, and Source.
 
 ## Terminology
@@ -74,6 +87,9 @@ Short interface labels also pass: Profiles, Demo, Download, Private, Works offli
 | Website grouping | work site |
 | Trial environment | demo |
 | Adjustable presentation | reading settings |
+| Main text control | reading text |
+| Vertical text control | line spacing |
+| Monospace text control | code text |
 | Installable archive | Chromium package |
 
 Implementation-only names such as `domainProfiles` and `semantic CSS` remain confined to source and developer documentation.

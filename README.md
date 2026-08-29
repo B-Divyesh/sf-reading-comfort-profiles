@@ -21,7 +21,7 @@ The demo includes an access-review document, code decision, and table. It uses o
 - Three starter profiles: Calm reading, Balanced work, and Code focus
 - Custom profiles copied from the current profile settings
 - Per-work-site profile assignment and pause state
-- Independent base text, line-height, and code-size controls
+- Separate controls for reading text, line spacing, and code text
 - Standard, stronger, and maximum text contrast treatments
 - Optional large pointer, high-contrast focus ring, and roomier tables
 - Keyboard commands for pause/resume and profile cycling

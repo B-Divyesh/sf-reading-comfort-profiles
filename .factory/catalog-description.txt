@@ -1,1 +1,1 @@
-Adjust reading settings for each work site.
+Adjust reading text, code, focus, and tables for each work site.

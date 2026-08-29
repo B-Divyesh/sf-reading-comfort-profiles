@@ -39,12 +39,16 @@ test('desktop first screen keeps the sample action and its result visible', asyn
 });
 
 test('@claim:sample-demo opens a seeded, isolated demo in one click', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   await page.getByRole('link', { name: /Try it with sample data/ }).click();
   await expect(page).toHaveURL(/\/demo\/\?demo=1$/);
   await expect(page.getByText('Demo — sample data, nothing is saved to your profiles')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Quarterly access review' })).toBeVisible();
-  await expect(page.getByText('Finance export')).toBeVisible();
+  const sampleHeading = page.getByRole('heading', { name: 'Quarterly access review' });
+  const reviewNote = page.getByText(/The support team resolved 18 access requests/);
+  await expect(sampleHeading).toBeInViewport();
+  await expect(reviewNote).toBeInViewport();
   expect(await page.evaluate(() => Object.keys(localStorage))).toEqual(['demo:reading-comfort-profiles']);
 });
 
@@ -161,6 +165,29 @@ test('all public pages have semantics, metadata, and no serious axe findings', a
     const results = await new AxeBuilder({ page: page as never }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
     expect(results.violations.filter((violation) => ['serious', 'critical'].includes(violation.impact ?? '')), path).toEqual([]);
   }
+});
+
+test('all public routes render the same site-wide header and footer', async ({ page }) => {
+  const renderedChrome: Array<{ path: string; header: string; footer: string; current: string[] }> = [];
+  for (const path of ['/', '/demo/', '/privacy/', '/terms/', '/404.html']) {
+    await page.goto(path);
+    renderedChrome.push({
+      path,
+      header: (await page.locator('#site-header').innerHTML()).replaceAll(' aria-current="page"', ''),
+      footer: (await page.locator('#site-footer').innerHTML()).replaceAll(' aria-current="page"', ''),
+      current: await page.locator('[aria-current="page"]').evaluateAll((items) => items.map((item) => item.textContent?.trim() ?? ''))
+    });
+  }
+  const [home, ...routes] = renderedChrome;
+  for (const route of routes) {
+    expect(route.header, `${route.path} header`).toBe(home!.header);
+    expect(route.footer, `${route.path} footer`).toBe(home!.footer);
+  }
+  expect(renderedChrome.find((route) => route.path === '/')?.current).toEqual(['Profiles']);
+  expect(renderedChrome.find((route) => route.path === '/demo/')?.current).toEqual(['Demo']);
+  expect(renderedChrome.find((route) => route.path === '/privacy/')?.current).toEqual(['Privacy', 'Privacy']);
+  expect(renderedChrome.find((route) => route.path === '/terms/')?.current).toEqual(['Terms']);
+  expect(renderedChrome.find((route) => route.path === '/404.html')?.current).toEqual([]);
 });
 
 test('mobile and 200% text layouts do not overflow and standalone targets reach 44px', async ({ page }) => {

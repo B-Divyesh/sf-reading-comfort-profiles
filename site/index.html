@@ -26,17 +26,7 @@
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
     <div class="offline-banner" id="offline-banner" role="status" hidden>You’re offline. This page still works; the extension download needs a connection.</div>
-    <header class="site-header">
-      <a class="wordmark" href="/" aria-label="Reading Comfort Profiles home">
-        <img src="/icon.svg" alt="" width="40" height="40" />
-        <span>Reading Comfort<br /><strong>Profiles</strong></span>
-      </a>
-      <nav aria-label="Primary navigation">
-        <a href="#profiles">Profiles</a>
-        <a href="/?demo=1">Demo</a>
-        <a class="nav-download" href="/downloads/reading-comfort-profiles-chrome.zip" download>Download <span aria-hidden="true">↓</span></a>
-      </nav>
-    </header>
+    <header id="site-header"></header>
 
     <main id="main">
       <section class="hero" aria-labelledby="hero-title">
@@ -151,12 +141,7 @@
       </section>
     </main>
 
-    <footer>
-      <a class="wordmark footer-mark" href="/" aria-label="Reading Comfort Profiles home"><img src="/icon.svg" alt="" width="36" height="36" /><span>Reading Comfort <strong>Profiles</strong></span></a>
-      <p>Adjust work sites for low-vision reading. Built by Param Factory.</p>
-      <nav aria-label="Legal navigation"><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="https://github.com/B-Divyesh/sf-reading-comfort-profiles" rel="noreferrer">Source ↗</a></nav>
-      <small>Version 1.0.4 · Build polish-2 · Original hero imagery was AI-generated for this product. © 2026 Sociobot.</small>
-    </footer>
+    <footer id="site-footer"></footer>
     <p class="route-status" aria-live="polite" aria-atomic="true"></p>
     <script type="module" src="/src/main.ts"></script>
   </body>

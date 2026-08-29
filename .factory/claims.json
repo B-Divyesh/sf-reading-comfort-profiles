@@ -1,10 +1,10 @@
 [
   {
     "id": "sample-demo",
-    "claim": "Visitors can open a seeded sample workspace in one click without changing real profile data.",
+    "claim": "Visitors can open a seeded sample workspace in one click, immediately see sample work, and leave real profile data unchanged.",
     "where": "landing first screen, /?demo=1, README",
     "test": "npm run test:e2e -- --grep @claim:sample-demo --project desktop-chromium",
-    "sandbox": "fresh browser context; click the landing action; assert the demo route, sample work, banner, and only the demo-prefixed storage key"
+    "sandbox": "fresh 390 x 844 browser context; click the landing action; assert the demo route, in-viewport sample heading and review note, banner, and only the demo-prefixed storage key"
   },
   {
     "id": "profile-settings",

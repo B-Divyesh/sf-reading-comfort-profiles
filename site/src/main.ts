@@ -1,3 +1,5 @@
+import { renderSiteChrome } from './chrome';
+
 const offlineBanner = document.getElementById('offline-banner');
 const DEMO_KEY = 'demo:reading-comfort-profiles';
 const ROUTE_FOCUS_KEY = 'reading-comfort-route-focus';
@@ -31,6 +33,7 @@ function updateConnectionState(event?: Event): void {
 }
 
 function initializePage(): void {
+  renderSiteChrome();
   window.addEventListener('online', updateConnectionState);
   window.addEventListener('offline', updateConnectionState);
   window.addEventListener('pageshow', handlePageShow);
