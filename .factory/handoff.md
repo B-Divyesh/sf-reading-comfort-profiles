@@ -1,36 +1,51 @@
-# Reading Comfort Profiles — review 4 handoff
+# Reading Comfort Profiles — polish round 4 handoff
 
 ## Result
 
-Adversarial review 4 is complete for candidate `688bf036365f7dad6b87887dab742e28dfd078d5` and the live site at <https://reading-comfort-profiles.sociobot.in>.
+Candidate `688bf036365f7dad6b87887dab742e28dfd078d5` is repaired, tested, pushed, and deployed at <https://reading-comfort-profiles.sociobot.in>.
 
-Verdict: **FAIL** with one minor finding and no blocking finding.
+The round-four pseudo-API and slogan were replaced with the demo’s realistic request-review code. A browser regression now requires that code and rejects both removed strings. Earlier demo, claims, routing, title, metadata, focus, 404, legal, mobile, privacy, accessibility, and offline repairs were rechecked rather than assumed.
 
-- `F-4-1`: the landing Code review preview uses invented pseudo-API copy and the slogan **“eyes stay oriented.”** Replace it with realistic code, such as the request-review snippet already used in the demo.
-- Cold first-read, one-click demo, demo isolation/reset/exit, offline behavior, all registered claims, routing, metadata, 404 handling, links, accessibility checks, privacy request logs, performance budget, visual identity, and every earlier finding passed re-verification.
-- Product code was not modified.
+Release identity is version `1.0.6`, build `polish-4`. The product remains a WXT Manifest V3 Chromium extension with a static Vite site and its glacial ceramic visual system.
 
-The complete evidence, copy audit, finding, claim table, and earlier-finding matrix are in `.factory/review-4.md`.
+## Source and deployment
 
-## How it was verified
+- Repair commit: `6b94e21fa65d77f47093cd63b55a912dbce1d8a0`
+- Branch: `main`, pushed to `origin/main`
+- Static deployment id: `1b393255-57c8-484f-9f7b-7b2fe95509be`
+- Deploy command: `/opt/fleet/lib/deploy-static.sh reading-comfort-profiles dist/site`
+- Live URL: <https://reading-comfort-profiles.sociobot.in>
+- Live HTML SHA-256: `734fe2c7ba7ea236537829521783d4cc2ae6757b8caca0dc727e3027a2a53484`
+- Live extension ZIP SHA-256: `0b921848facd4b022fbde6a6f6b6062bd75a1707a611df530010ef3332edd0b2`
 
-A clean clone was created at `/tmp/rcp-review4-clean-1suQ2t/repo` from the candidate commit.
+## Verification
+
+The clean remote clone was `/tmp/rcp-polish4-clean-UvFBvW/repo` at `6b94e21`.
 
 ```sh
 npm ci
 npm test
 npm run check
 npm run build
-CI=1 npm run test:e2e
+# Every exact command in .factory/claims.json, run separately
+CI=1 npm run verify
 npm audit --omit=dev
 ```
 
-Every exact test command in `.factory/claims.json` was also run independently: 19/19 passed. The full Playwright run passed 31 tests with one intentional duplicate mobile extension run skipped.
+Results:
 
-Fresh live Chromium contexts at 390 × 844 and 1440 × 900 checked first-screen geometry. A separate live flow checked demo storage with a real-data sentinel, Reset, Start for real, same-origin request logs, cookies, errors, and offline reload. Live Axe checks covered all public routes and the real 404 response. `/opt/fleet/lib/verify-url.sh` passed home, demo, privacy, and terms.
+- 7 unit tests passed.
+- 19/19 exact claim commands passed independently.
+- Full browser run: 33 passed; one expected duplicate mobile extension test skipped.
+- `dist/site/`, `dist/extension/`, and the downloadable ZIP were produced.
+- Axe found zero serious or critical issues locally and on every live public route plus a real 404.
+- Demo isolation, Reset, Start for real, offline reload, same-origin requests, focus/Back, mobile layout, 200% text, 44 px targets, metadata, legal links, and real 404 behavior passed.
+- `/opt/fleet/lib/verify-url.sh` passed home, demo, privacy, and terms with no console errors.
+- Lighthouse: Performance 100, Accessibility 100, Best Practices 100, SEO 100; FCP 0.9 s, LCP 1.2 s, CLS 0, TBT 20 ms, 61 KiB transferred.
+- Initial site JavaScript: 2,467 bytes gzip.
 
-The live extension archive passed `unzip -t`; its extracted files match the clean build byte-for-byte. Live `index.html` also matches the clean build.
+Detailed finding-by-finding evidence is in `.factory/polish-4.md`. Cold screenshots and machine-readable checks are under `.factory/qa-evidence/polish-4-*`.
 
-## Remaining work
+## Known gaps and next steps
 
-Resolve F-4-1, rerun the complete copy/claims review, and publish through the factory workflow. No infrastructure, DNS, billing, or deployment action was taken in this review.
+None. No review finding, stub, TODO, deployment mismatch, or deferred severity remains.

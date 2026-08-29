@@ -1,0 +1,144 @@
+{
+  "base": "https://reading-comfort-profiles.sociobot.in",
+  "checkedAt": "2026-08-29T03:51:15.784Z",
+  "routes": {
+    "/": {
+      "status": 200,
+      "title": "Reading Comfort Profiles — Adjust work sites",
+      "h1": 1,
+      "main": 1,
+      "lang": "en",
+      "canonical": "https://reading-comfort-profiles.sociobot.in/",
+      "axeSeriousCritical": []
+    },
+    "/demo/": {
+      "status": 200,
+      "title": "Demo — Reading Comfort Profiles",
+      "h1": 1,
+      "main": 1,
+      "lang": "en",
+      "canonical": "https://reading-comfort-profiles.sociobot.in/demo/",
+      "axeSeriousCritical": []
+    },
+    "/privacy/": {
+      "status": 200,
+      "title": "Privacy — Reading Comfort Profiles",
+      "h1": 1,
+      "main": 1,
+      "lang": "en",
+      "canonical": "https://reading-comfort-profiles.sociobot.in/privacy/",
+      "axeSeriousCritical": []
+    },
+    "/terms/": {
+      "status": 200,
+      "title": "Terms — Reading Comfort Profiles",
+      "h1": 1,
+      "main": 1,
+      "lang": "en",
+      "canonical": "https://reading-comfort-profiles.sociobot.in/terms/",
+      "axeSeriousCritical": []
+    },
+    "/404.html": {
+      "status": 200,
+      "title": "Page not found — Reading Comfort Profiles",
+      "h1": 1,
+      "main": 1,
+      "lang": "en",
+      "canonical": "https://reading-comfort-profiles.sociobot.in/404.html",
+      "axeSeriousCritical": []
+    },
+    "/missing-polish-4": {
+      "status": 404,
+      "title": "Page not found — Reading Comfort Profiles",
+      "h1": 1,
+      "main": 1,
+      "lang": "en",
+      "canonical": "https://reading-comfort-profiles.sociobot.in/404.html",
+      "axeSeriousCritical": []
+    },
+    "focusBack": "landing → demo → Back focused h1 and announced both titles"
+  },
+  "demo": {
+    "url": "https://reading-comfort-profiles.sociobot.in/demo/?demo=1",
+    "headingBox": {
+      "x": 41,
+      "y": 602.96875,
+      "width": 308,
+      "height": 71.28125
+    },
+    "reviewBox": {
+      "x": 37,
+      "y": 756.015625,
+      "width": 316,
+      "height": 156.71875
+    },
+    "keysDuringDemo": [
+      "demo:reading-comfort-profiles",
+      "real:sentinel"
+    ],
+    "resetValue": 19,
+    "sentinelAfterExit": "unchanged",
+    "offline": {
+      "failedRequests": [],
+      "fontOutput": "23 px",
+      "background": "rgb(243, 247, 245)"
+    }
+  },
+  "firstScreen": {
+    "mobile": {
+      "actionBox": {
+        "x": 20,
+        "y": 637.984375,
+        "width": 350,
+        "height": 52
+      },
+      "noteBox": {
+        "x": 20,
+        "y": 701.984375,
+        "width": 350,
+        "height": 40.59375
+      },
+      "headline": "Adjust work sites for\nlow-vision reading.",
+      "audience": "For knowledge workers with low vision who need different reading settings across web-based work apps."
+    },
+    "desktop": {
+      "actionBox": {
+        "x": 60,
+        "y": 708.828125,
+        "width": 281.28125,
+        "height": 52
+      },
+      "noteBox": {
+        "x": 361.28125,
+        "y": 714.53125,
+        "width": 298.71875,
+        "height": 40.59375
+      }
+    }
+  },
+  "network": {
+    "origins": [
+      "https://reading-comfort-profiles.sociobot.in"
+    ],
+    "errors": []
+  },
+  "artifacts": {
+    "indexSha256": "734fe2c7ba7ea236537829521783d4cc2ae6757b8caca0dc727e3027a2a53484",
+    "extensionZipSha256": "0b921848facd4b022fbde6a6f6b6062bd75a1707a611df530010ef3332edd0b2",
+    "codeSample": "01 if (request.needsReview) {\n02   assignTo(manager);\n03 }",
+    "release": "1.0.6 / polish-4"
+  },
+  "performance": {
+    "initialJsGzipBytes": 2467
+  },
+  "links": {
+    "https://github.com/B-Divyesh/sf-reading-comfort-profiles": 200,
+    "https://reading-comfort-profiles.sociobot.in/": 200,
+    "https://reading-comfort-profiles.sociobot.in/404.html": 200,
+    "https://reading-comfort-profiles.sociobot.in/?demo=1": 200,
+    "https://reading-comfort-profiles.sociobot.in/demo/": 200,
+    "https://reading-comfort-profiles.sociobot.in/downloads/reading-comfort-profiles-chrome.zip": 200,
+    "https://reading-comfort-profiles.sociobot.in/privacy/": 200,
+    "https://reading-comfort-profiles.sociobot.in/terms/": 200
+  }
+}
