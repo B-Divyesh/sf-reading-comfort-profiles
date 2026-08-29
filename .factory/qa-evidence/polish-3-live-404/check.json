@@ -1,0 +1,9 @@
+{
+  "status": 404,
+  "title": "Page not found — Reading Comfort Profiles",
+  "h1": "We could not find this page.",
+  "main": 1,
+  "seriousCritical": 0,
+  "expectedNavigation404Console": 1,
+  "unexpectedConsoleErrors": []
+}

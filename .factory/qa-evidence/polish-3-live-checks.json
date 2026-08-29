@@ -1,0 +1,57 @@
+{
+  "routes": {
+    "/": {
+      "status": 200,
+      "title": "Reading Comfort Profiles — Adjust work sites",
+      "axeSeriousCritical": 0,
+      "consoleErrors": 0
+    },
+    "/demo/": {
+      "status": 200,
+      "title": "Demo — Reading Comfort Profiles",
+      "axeSeriousCritical": 0,
+      "consoleErrors": 0
+    },
+    "/privacy/": {
+      "status": 200,
+      "title": "Privacy — Reading Comfort Profiles",
+      "axeSeriousCritical": 0,
+      "consoleErrors": 0
+    },
+    "/terms/": {
+      "status": 200,
+      "title": "Terms — Reading Comfort Profiles",
+      "axeSeriousCritical": 0,
+      "consoleErrors": 0
+    },
+    "/404.html": {
+      "status": 200,
+      "title": "Page not found — Reading Comfort Profiles",
+      "axeSeriousCritical": 0,
+      "consoleErrors": 0
+    }
+  },
+  "demo": {
+    "sample": {
+      "top": 602.96875,
+      "bottom": 674.25
+    },
+    "reviewNote": {
+      "top": 756.015625,
+      "bottom": 912.734375
+    },
+    "headingFocused": true,
+    "announcement": "Demo — Reading Comfort Profiles",
+    "storage": [
+      "demo:reading-comfort-profiles"
+    ],
+    "errors": [],
+    "remoteRequests": []
+  },
+  "offline": {
+    "heading": "Quarterly access review",
+    "profile": "docs.example.com · Code focus",
+    "styled": "rgb(243, 247, 245)"
+  },
+  "chrome": {}
+}
