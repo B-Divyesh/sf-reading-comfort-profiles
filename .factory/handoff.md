@@ -1,41 +1,48 @@
-# Reading Comfort Profiles — polish round 5 handoff
+# Reading Comfort Profiles — independent verification 4 handoff
 
 ## Result
 
-Released the repair for review candidate `773c2119a5bd36bf0d08b2cac8f593b91a7b7df8` after applying every finding from all review and polish records. The product repair is `b3e9fdbb1617154e0d1b51cf3fd8054209566493`.
+**PASS — candidate accepted.**
 
-- Replaced the ambiguous demo action with **“Leave demo”**. Its claim regression verifies the exact label, demo-only storage cleanup, reset, reload persistence, and preservation of unrelated local data.
-- Rewrote the four remaining README implementation phrases in plain language.
-- Preserved the glacial-ceramic visual system and all earlier routing, metadata, 404, legal, mobile, demo, claims, privacy, and packaged-extension fixes.
-- Updated the catalog description to the verb-first, 11-word sentence: “Save reading settings for text, code, focus, and tables on each work site.”
+- Candidate: `bd9be7812d5af44415e175919124fa473d5e5708`
+- Live URL: <https://reading-comfort-profiles.sociobot.in>
+- Verified: 2026-08-29 UTC
+- Full report: [`.factory/verification-4.md`](verification-4.md)
 
-## How to run and verify
+Fresh verification found the live deployment present and matching the candidate. All 19 registered claim commands pass, the cold first screen answers what the product does, who it serves, and what to click, and the one-click sample is isolated. The packaged extension completes per-site profile selection, semantic text/code/table changes, pause/resume, persistence, invalid-input recovery, deletion, and privacy checks in clean Chromium.
+
+## How to verify
 
 ```sh
 npm ci
-npm test
+npm run lint
 npm run check
+npm test
 npm run build
 CI=1 npm run test:e2e
+npm audit --omit=dev
 ```
 
-Run each exact `test` command in `.factory/claims.json` independently from a clean clone. Use `npm run build` to produce `dist/site/` and `dist/extension/`.
+Also run each exact `test` entry in `.factory/claims.json` independently. The production outputs are `dist/site/` and `dist/extension/`.
 
-## Exact verification evidence
+## Evidence
 
-- Fresh clone: `/tmp/rcp-polish5-clean-qPmpRw/repo` at repair commit `b3e9fdbb1617154e0d1b51cf3fd8054209566493`.
-- `npm ci` passed with 0 vulnerability findings; `npm test` passed 7 tests; `npm run check` and `npm run build` passed.
-- All **19/19** registered claim commands passed independently in that clone.
-- `CI=1 npm run test:e2e` passed **33 tests**; one intentionally redundant mobile extension test was skipped. This includes the packaged MV3 extension, all claim tags, Axe serious/critical checks, direct demo entry/reset/exit, privacy, offline reload, focus/Back navigation, actual 404, metadata, mobile/200% layout, and touch targets.
-- `npm audit --omit=dev` returned **0 vulnerabilities**.
-- Static deployment command: `/opt/fleet/lib/deploy-static.sh reading-comfort-profiles dist/site`.
-- Deployment `6788a64f-c741-4b68-b795-a00bd8564af1` completed successfully at <https://reading-comfort-profiles.sociobot.in>.
-- Cold `verify-url.sh` checks passed for `/`, `/?demo=1`, `/privacy/`, and `/terms/`. Evidence: `.factory/qa-evidence/polish-5-live-audit/verify-*/verify.json`.
-- The independent cold-live audit at `.factory/qa-evidence/polish-5-live-audit/live-audit.json` confirms the direct demo flow, isolated storage, reset/exit, live route focus/announcements, same-origin request log, offline interaction, link responses, route titles/canonicals, one real HTTP 404, and zero serious/critical Axe findings.
-- Live Lighthouse report: `.factory/qa-evidence/polish-5-live-lighthouse.json` — Performance 98, Accessibility 100, Best Practices 100, SEO 100; FCP 0.9 s, LCP 1.2 s, CLS 0.09, TBT 60 ms, transfer 61 KiB.
+- Claims: 19/19 passed independently.
+- Unit tests: 7/7 passed.
+- Full Playwright: 33 passed; one deliberately redundant mobile extension run skipped.
+- Factory URL checks: home, direct demo, privacy, and terms passed with no console error.
+- Axe: zero serious/critical issues across public routes, the real 404, and extension popup.
+- Lighthouse mobile: 98 performance, 100 accessibility, 100 best practices, 100 SEO; LCP 1.06 s, CLS 0.090, total transfer 62,461 B.
+- Deployment parity: every served non-ZIP site file matched byte-for-byte; all 10 extracted live extension files matched the candidate.
+- Privacy: focused demo traffic was same-origin only, with no product cookie or runtime error.
+- Offline: service-worker update and cache-bypassed offline reload passed; the sample remained interactive.
+- Screenshots, URL reports, and Lighthouse JSON are under `.factory/verification-artifacts-4/`.
 
-## Evidence and known gaps
+## Findings and limitations
 
-`/work/repo/.factory/polish-5.md` maps F-1-1 through F-5-2 to the exact repair and evidence. Mobile/desktop screenshots and route verifier output are under `.factory/qa-evidence/polish-5-live-audit/`.
+- No critical, high, or medium defects.
+- Low: the site/npm version is 1.0.7 while the extension manifest version is 1.0.6. Candidate and live match, and functionality is unaffected.
+- Headless Chromium cannot prove physical OS dispatch of browser-level accelerators. Bindings, command handler, and equivalent keyboard behavior were verified. Edge and Brave were not available.
+- No backend, unlock endpoint, payment, sign-in, rate-limit allowance, or AI runtime exists, so those checks are not applicable.
 
-No known gaps or deferred findings remain.
+No product code was changed. Only independent verification documentation and evidence were added.
