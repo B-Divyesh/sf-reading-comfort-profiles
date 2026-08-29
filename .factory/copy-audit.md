@@ -1,6 +1,6 @@
 # Landing-page copy audit
 
-Audited 2026-08-29 against `site/index.html`, the shared public chrome, and `README.md`. Counts treat numbers and hyphenated terms as one word. No sentence exceeds 22 words. No banned marketing word appears. Capability statements map to `.factory/claims.json`.
+Audited 2026-08-29 for polish round 4 against `site/index.html`, the shared public chrome, and `README.md`. Counts treat numbers and hyphenated terms as one word. No sentence exceeds 22 words. No banned marketing word appears. Capability statements map to `.factory/claims.json`.
 
 ## First screen
 
@@ -31,6 +31,7 @@ Audited 2026-08-29 against `site/index.html`, the shared public chrome, and `REA
 | Change paragraph text and line spacing while page controls keep their original size. | 13 | Pass — `semantic-layout`. |
 | Code text size | 3 | Pass — concrete feature heading. |
 | Change monospace text without changing surrounding headings or navigation. | 9 | Pass — `semantic-layout`. |
+| if (request.needsReview) { assignTo(manager); } | Code sample | Pass — realistic request-review code shared with the demo; no product API or outcome slogan. |
 | Table cell spacing | 3 | Pass — concrete feature heading. |
 | Add cell spacing without changing table headings, values, or structure. | 10 | Pass — `table-spacing`. |
 

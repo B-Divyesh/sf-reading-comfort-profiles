@@ -38,6 +38,15 @@ test('desktop first screen keeps the sample action and its result visible', asyn
   expect(noteBox!.y + noteBox!.height).toBeLessThanOrEqual(900);
 });
 
+test('code preview uses the realistic request-review sample without product lore', async ({ page }) => {
+  await page.goto('/');
+  const sample = page.locator('pre[aria-label="Code-size illustration"]');
+  await expect(sample).toContainText('if (request.needsReview) {');
+  await expect(sample).toContainText('assignTo(manager);');
+  await expect(sample).not.toContainText('profile.apply');
+  await expect(sample).not.toContainText('eyes stay oriented');
+});
+
 test('@claim:sample-demo opens a seeded, isolated demo in one click', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');

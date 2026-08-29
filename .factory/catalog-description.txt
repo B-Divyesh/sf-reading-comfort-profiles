@@ -1,1 +1,1 @@
-Adjust reading text, code, focus, and tables for each work site.
+Save reading profiles for text, code, focus, and tables on each work site.
