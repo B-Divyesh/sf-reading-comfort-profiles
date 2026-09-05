@@ -1,4 +1,51 @@
-# Reading Comfort Profiles — repair 3 handoff
+# Reading Comfort Profiles — strict review 7 handoff
+
+## Strict review 7
+
+**PASS — 0 findings and 0 untested public claims.**
+
+- Implementation reviewed: `37478e404b3216bc9956c9570d17a4399708356c`
+- Documentation baseline reviewed: `75eb5bdc141b558d5d3ec70ac1b107686ce546bd`
+- Report: `.factory/review-7.md`
+- Live URL: <https://reading-comfort-profiles.sociobot.in>
+
+Fresh 1440 × 900 desktop and 390 × 844 phone sessions showed the job,
+audience, and **Try it with sample data** action before scrolling. One click
+opened the populated, isolated sample workspace. Its persistent demo label,
+Reset demo, Leave demo, sample-state isolation, real-record preservation, and
+offline reload all passed on the live product.
+
+From the documented clean install, `npm run lint`, `npm run check`, `npm test`
+(9 tests), `npm run build`, all 19 exact claim commands, `npm run verify`, and
+the complete browser suite passed (35 passed; one intentional mobile extension
+duplicate skip). Both dependency audits report zero vulnerabilities. The
+packaged extension was run as the only extension in a fresh Chromium profile.
+
+Live Axe scans found zero serious or critical issues on home, demo, Privacy,
+Terms, and the designed HTTP 404. Live routes, link crawl, keyboard navigation,
+reduced motion, 200% mobile layout, privacy requests, service-worker offline
+reload, security headers, and package/site candidate matching passed. The live
+site matches all 16 candidate non-archive files byte-for-byte; all ten
+extracted live extension files match the candidate build.
+
+No product code changed during this review. The only known limits are the
+intentional product boundaries: Chromium is the tested target, and this static
+browser-extension product has no backend, database, tenant, health, or rate
+limit surface.
+
+## How to verify
+
+```sh
+npm ci
+npm run verify
+```
+
+For the isolated sample, open
+`https://reading-comfort-profiles.sociobot.in/?demo=1`. For the packaged
+consumer check, run the Playwright suite; it builds and loads `dist/extension/`
+into fresh Chromium automatically.
+
+---
 
 ## Independent verification 5
 
