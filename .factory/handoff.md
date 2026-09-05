@@ -60,6 +60,8 @@ profile deletion, and unsupported pages.
   unrelated `real:sentinel` key.
 - Live privacy copy names the local form accurately. The live footer and ZIP
   manifest both report `1.0.7`.
+- The live home, demo, privacy, and terms HTML hash-match the implementation
+  candidate. All extracted files from the live extension ZIP also match.
 - Live Axe WCAG 2 A/AA and 2.1 AA scans found zero serious or critical issues
   on home, demo, privacy, terms, and a real unknown route.
 - The unknown route correctly returned HTTP 404 with a designed page, one `h1`,
