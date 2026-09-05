@@ -5,7 +5,7 @@
 **PASS — all four strict-review findings are resolved.**
 
 - Implementation SHA: `37478e404b3216bc9956c9570d17a4399708356c`
-- Documentation SHA: recorded by the follow-up handoff commit
+- Documentation evidence SHA: `479dfb7d42f7a714509866d95a9f0ed4cc59e455`
 - Live URL: <https://reading-comfort-profiles.sociobot.in>
 - Static deployment: `13570452-5732-43f9-a383-d7850f7430b8`
 - Release version: `1.0.7` in `package.json`, the site footer, and the downloaded extension manifest
