@@ -1,5 +1,23 @@
 # Reading Comfort Profiles — repair 3 handoff
 
+## Independent verification 5
+
+**PASS — 0 findings and 0 untested public claims.**
+
+- Implementation reviewed: `37478e404b3216bc9956c9570d17a4399708356c`
+- Documentation/report baseline: `f913bcce68532910477f9dac26d51ff160702fa6`
+- Verification report: `.factory/verification-5.md`
+- Live URL: <https://reading-comfort-profiles.sociobot.in>
+
+Fresh desktop and phone Chromium checks confirmed the first-read job,
+audience, action, isolated populated demo, reset, real-data preservation, and
+offline reload. Every declared claim command passed independently (19/19).
+The full browser suite passed with 35 passes and one intentional mobile
+extension duplicate skip. Local lint, type checks, unit tests, build, and both
+audits passed. Live Axe scans found no serious or critical issues on home,
+demo, Privacy, Terms, or the designed HTTP 404 page. The live public HTML and
+the extracted extension files match the implementation candidate.
+
 ## Result
 
 **PASS — all four strict-review findings are resolved.**
