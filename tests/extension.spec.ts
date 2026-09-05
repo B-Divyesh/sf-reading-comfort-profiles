@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-test('@claim:chromium-package @claim:per-domain-profiles @claim:semantic-layout @claim:table-spacing @claim:setting-ranges @claim:focus-cursor-visibility @claim:starter-profiles @claim:custom-profile-clone @claim:contrast-treatments @claim:extension-privacy @claim:content-preservation @claim:profile-deletion @claim:unsupported-pages verifies the packaged extension end to end', async ({}, testInfo) => {
+test('@claim:chromium-package @claim:keyboard-shortcuts @claim:per-domain-profiles @claim:semantic-layout @claim:table-spacing @claim:setting-ranges @claim:focus-cursor-visibility @claim:starter-profiles @claim:custom-profile-clone @claim:contrast-treatments @claim:extension-privacy @claim:content-preservation @claim:profile-deletion @claim:unsupported-pages verifies the packaged extension end to end', async ({}, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chromium', 'One extension smoke test is sufficient.');
   const userDataDir = mkdtempSync('/tmp/rcp-extension-test-');
   const extensionPath = resolve('dist/extension');
@@ -21,6 +21,10 @@ test('@claim:chromium-package @claim:per-domain-profiles @claim:semantic-layout 
     let worker = context.serviceWorkers()[0];
     if (!worker) worker = await context.waitForEvent('serviceworker');
     const extensionId = new URL(worker.url()).host;
+    const commandBindings = await worker.evaluate(() => chrome.runtime.getManifest().commands);
+    expect(commandBindings?.['toggle-comfort']?.suggested_key?.default).toBe('Alt+Shift+R');
+    expect(commandBindings?.['next-profile']?.suggested_key?.default).toBe('Alt+Shift+Period');
+    expect(commandBindings?.['previous-profile']?.suggested_key?.default).toBe('Alt+Shift+Comma');
     const workPage = await context.newPage();
     await workPage.goto('http://127.0.0.1:4173/demo/?extension-fixture=1');
     await workPage.waitForSelector('html[data-reading-comfort="calm-reading"]');
@@ -51,6 +55,27 @@ test('@claim:chromium-package @claim:per-domain-profiles @claim:semantic-layout 
     await expect(popup.locator('#line-height')).toHaveAttribute('max', '2');
     await expect(popup.locator('#code-size')).toHaveAttribute('min', '13');
     await expect(popup.locator('#code-size')).toHaveAttribute('max', '26');
+
+    const runBrowserCommand = async (command: 'toggle-comfort' | 'next-profile' | 'previous-profile'): Promise<void> => {
+      await workPage.bringToFront();
+      await worker.evaluate(async (requestedCommand) => {
+        const testApi = (globalThis as typeof globalThis & {
+          __readingComfortTest?: { runCommand: (command: typeof requestedCommand) => Promise<void> };
+        }).__readingComfortTest;
+        if (!testApi) throw new Error('The WebDriver command test hook is unavailable.');
+        await testApi.runCommand(requestedCommand);
+      }, command);
+    };
+
+    await runBrowserCommand('toggle-comfort');
+    await workPage.waitForSelector('html:not([data-reading-comfort])');
+    await expect(workPage.locator('#reading-comfort-profiles-style')).toHaveCount(0);
+    await runBrowserCommand('toggle-comfort');
+    await workPage.waitForSelector('html[data-reading-comfort="calm-reading"]');
+    await runBrowserCommand('next-profile');
+    await workPage.waitForSelector('html[data-reading-comfort="balanced-work"]');
+    await runBrowserCommand('previous-profile');
+    await workPage.waitForSelector('html[data-reading-comfort="calm-reading"]');
 
     const accessibility = await new AxeBuilder({ page: popup as never })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])

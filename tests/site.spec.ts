@@ -95,18 +95,35 @@ test('@claim:profile-settings changes, saves, and resets the sample profile', as
   }))).toEqual({ demo: null, real: 'keep me' });
 });
 
-test('@claim:privacy-local keeps the complete demo flow same-origin and in demo storage', async ({ page }) => {
+test('@claim:privacy-local keeps the complete demo flow local and in demo storage', async ({ page }) => {
   const remoteRequests: string[] = [];
+  const dataRequests: string[] = [];
   page.on('request', (request) => {
     const url = new URL(request.url());
     if (url.origin !== 'http://127.0.0.1:4173') remoteRequests.push(request.url());
+    if (!['GET', 'HEAD'].includes(request.method())) dataRequests.push(`${request.method()} ${request.url()}`);
   });
+  await page.goto('/privacy/');
+  await expect(page.locator('main')).toContainText('form submissions');
   await page.goto('/demo/');
+  const submissionCount = await page.locator('#demo-controls').evaluate((form) => {
+    let count = 0;
+    form.addEventListener('submit', (event) => {
+      count += 1;
+      event.preventDefault();
+    });
+    Object.defineProperty(form, 'submissionCount', { get: () => count });
+    return true;
+  });
+  expect(submissionCount).toBeTruthy();
   await page.selectOption('#demo-profile', 'code');
   await page.locator('#demo-tables').uncheck();
+  await page.locator('#demo-font').fill('23');
   await page.getByRole('button', { name: 'Reset demo' }).click();
+  expect(await page.locator('#demo-controls').evaluate((form) => (form as HTMLFormElement & { submissionCount: number }).submissionCount)).toBe(0);
   expect(await page.evaluate(() => Object.keys(localStorage))).toEqual(['demo:reading-comfort-profiles']);
   expect(await page.context().cookies()).toEqual([]);
+  expect(dataRequests).toEqual([]);
   expect(remoteRequests).toEqual([]);
 });
 
@@ -152,13 +169,24 @@ test('@claim:free-download provides the free Chromium package with no sign-in st
   expect(files['manifest.json']).toBeDefined();
 });
 
-test('@claim:keyboard-shortcuts packages all three advertised browser commands', async ({ request }) => {
+test('release manifest keeps the advertised command bindings', async ({ request }) => {
   const response = await request.get('/downloads/reading-comfort-profiles-chrome.zip');
   const files = unzipSync(new Uint8Array(await response.body()));
   const manifest = JSON.parse(strFromU8(files['manifest.json']!)) as { commands: Record<string, { suggested_key: { default: string } }> };
   expect(manifest.commands['toggle-comfort']?.suggested_key.default).toBe('Alt+Shift+R');
   expect(manifest.commands['next-profile']?.suggested_key.default).toBe('Alt+Shift+Period');
   expect(manifest.commands['previous-profile']?.suggested_key.default).toBe('Alt+Shift+Comma');
+});
+
+test('site and downloaded extension show the same release version', async ({ page, request }) => {
+  const packageVersion = (JSON.parse(readFileSync('package.json', 'utf8')) as { version: string }).version;
+  await page.goto('/');
+  await expect(page.locator('#site-footer')).toContainText(`Version ${packageVersion}`);
+
+  const response = await request.get('/downloads/reading-comfort-profiles-chrome.zip');
+  const files = unzipSync(new Uint8Array(await response.body()));
+  const manifest = JSON.parse(strFromU8(files['manifest.json']!)) as { version: string };
+  expect(manifest.version).toBe(packageVersion);
 });
 
 test('all public pages have semantics, metadata, and no serious axe findings', async ({ page }) => {

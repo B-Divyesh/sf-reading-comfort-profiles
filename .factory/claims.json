@@ -15,10 +15,10 @@
   },
   {
     "id": "privacy-local",
-    "claim": "The website demo has no analytics, cookies, accounts, or third-party runtime requests and uses only demo-prefixed local storage.",
+    "claim": "The website demo has no analytics, cookies, accounts, form submissions, or third-party runtime requests and uses only demo-prefixed local storage.",
     "where": "landing facts, /demo, /privacy, README",
     "test": "npm run test:e2e -- --grep @claim:privacy-local --project desktop-chromium",
-    "sandbox": "intercept every request during the complete demo flow; assert same-origin only, no cookies, and only the demo storage namespace"
+    "sandbox": "intercept every request during the complete demo flow; interact with the local form; assert no submission or data request, same-origin only, no cookies, and only the demo storage namespace"
   },
   {
     "id": "offline-reload",
@@ -46,7 +46,7 @@
     "claim": "The packaged extension provides commands to pause or resume and cycle profiles.",
     "where": "landing keyboard section, popup, README",
     "test": "npm run test:e2e -- --grep @claim:keyboard-shortcuts --project desktop-chromium",
-    "sandbox": "download and unpack the release archive; assert all three command IDs and advertised default bindings in its manifest"
+    "sandbox": "fresh Chromium profile with the packaged extension; send each advertised browser key command to a work page; assert pause, resume, next-profile, and previous-profile outcomes"
   },
   {
     "id": "per-domain-profiles",

@@ -71,6 +71,10 @@ Keyboard commands default to:
 - `Alt+Shift+.`: use the next profile
 - `Alt+Shift+,`: use the previous profile
 
+To check a release in a normal Chromium window, open a work site with the
+extension loaded. Press each shortcut once and confirm the site pauses,
+resumes, moves to Balanced work, then returns to Calm reading.
+
 ## Project layout
 
 - `src/entrypoints/`: WXT popup, content script, and background worker

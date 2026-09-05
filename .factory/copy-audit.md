@@ -1,6 +1,6 @@
 # Landing-page copy audit
 
-Audited 2026-08-29 for polish round 5 against `site/index.html`, the demo, shared public chrome, and `README.md`. Counts treat numbers and hyphenated terms as one word. This inventory covers every reader-facing sentence, heading, label, action, and standalone fact; code samples and keyboard keycaps are recorded as code rather than prose. No sentence exceeds 22 words. No banned marketing word appears. Capability statements map to `.factory/claims.json`.
+Audited 2026-09-05 for repair 3 against `site/index.html`, the demo, privacy page, shared public chrome, and `README.md`. Counts treat numbers and hyphenated terms as one word. This inventory covers every reader-facing sentence, heading, label, action, and standalone fact; code samples and keyboard keycaps are recorded as code rather than prose. No sentence exceeds 22 words. No banned marketing word appears. Capability statements map to `.factory/claims.json`.
 
 ## First screen
 
@@ -90,6 +90,9 @@ Short interface labels also pass: Profiles, Demo, Download, Private, Works offli
 | The site works offline after the first visit. | 9 | Pass — plain README explanation; `offline-reload`. |
 | It includes Privacy and Terms pages. | 6 | Pass — plain README route description; public-route regression. |
 | The extension changes how pages look. | 6 | Pass — plain README description; `content-preservation`. |
+| The product website has no analytics, cookies, accounts, form submissions, or third-party resources. | 12 | Pass — `privacy-local` records local form use, no submit event or data request, no cookies, and no third-party request. |
+| To check a release in a normal Chromium window, open a work site with the extension loaded. | 17 | Pass — manual physical shortcut check for the browser-owned accelerator layer. |
+| Press each shortcut once and confirm the site pauses, resumes, moves to Balanced work, then returns to Calm reading. | 19 | Pass — `keyboard-shortcuts` runs the same handler against the packaged extension and checks each result. |
 
 ## Terminology
 
